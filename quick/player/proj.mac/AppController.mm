@@ -202,7 +202,7 @@ std::string getCurAppPath(void)
     //
     // load player.lua file
     //
-    string playerCoreFilePath = SimulatorConfig::getInstance()->getQuickCocos2dxRootPath() + "quick/player/src/player.lua";
+    string playerCoreFilePath = SimulatorConfig::getInstance()->getQuickCocos2dxRootPath() + "quick/welcome/src/player.lua";
     pEngine->getLuaStack()->executeScriptFile(playerCoreFilePath.c_str());
     
     

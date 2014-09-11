@@ -292,10 +292,18 @@ function ui.newTTFLabel(params)
            "[framework.ui] newTTFLabel() invalid params.size")
 
     local label
-    if dimensions then
-        label = cc.LabelTTF:create(text, font, size, dimensions, textAlign, textValign)
+    if cc.FileUtils:getInstance():isFileExist(font) then
+        if dimensions then
+            label = cc.Label:createWithTTF(text, font, size, dimensions, textAlign, textValign)
+        else
+            label = cc.Label:createWithTTF(text, font, size)
+        end
     else
-        label = cc.LabelTTF:create(text, font, size)
+        if dimensions then
+            label = cc.LabelTTF:create(text, font, size, dimensions, textAlign, textValign)
+        else
+            label = cc.LabelTTF:create(text, font, size)
+        end
     end
 
     if label then

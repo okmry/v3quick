@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <ctype.h>
 
 #include "base/CCData.h"
+#include "apptools/HelperFunc.h"
 
 
 #ifdef EMSCRIPTEN
@@ -447,7 +448,7 @@ bool Image::initWithImageFile(const std::string& path)
 
     SDL_FreeSurface(iSurf);
 #else
-    Data data = FileUtils::getInstance()->getDataFromFile(_filePath);
+    Data data = HelperFunc::getData(_filePath);
 
     if (!data.isNull())
     {
@@ -463,7 +464,7 @@ bool Image::initWithImageFileThreadSafe(const std::string& fullpath)
     bool ret = false;
     _filePath = fullpath;
 
-    Data data = FileUtils::getInstance()->getDataFromFile(fullpath);
+    Data data = HelperFunc::getData(_filePath);
 
     if (!data.isNull())
     {

@@ -229,7 +229,7 @@ void PlayerWin::loadLuaConfig()
     lua_setglobal(pEngine->getLuaStack()->getLuaState(), "__PLAYER_OPEN_COMMAND__");
 
     // load player.lua
-    string playerCoreFilePath = quickRootPath + "quick/player/src/player.lua";
+    string playerCoreFilePath = quickRootPath + "quick/welcome/src/player.lua";
     pEngine->getLuaStack()->executeScriptFile(playerCoreFilePath.c_str());
 }
 
@@ -326,18 +326,18 @@ int PlayerWin::run()
     // enable DPI-Aware with DeclareDPIAware.manifest
     // http://msdn.microsoft.com/en-us/library/windows/desktop/dn469266%28v=vs.85%29.aspx#declaring_dpi_awareness
     float screenScale = 1.0f;
-    if (dpi >= 120 && dpi < 144)
-    {
-        screenScale = 1.25f;
-    }
-    else if (dpi >= 144 && dpi < 192)
-    {
-        screenScale = 1.5f;
-    }
-    else if (dpi >= 192)
-    {
-        screenScale = 2.0f;
-    }
+    //if (dpi >= 120 && dpi < 144)
+    //{
+    //    screenScale = 1.25f;
+    //}
+    //else if (dpi >= 144 && dpi < 192)
+    //{
+    //    screenScale = 1.5f;
+    //}
+    //else if (dpi >= 192)
+    //{
+    //    screenScale = 2.0f;
+    //}
     CCLOG("SCREEN DPI = %d, SCREEN SCALE = %0.2f", dpi, screenScale);
 
     // create opengl view

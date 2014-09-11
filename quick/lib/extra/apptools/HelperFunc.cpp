@@ -70,3 +70,15 @@ int HelperFunc::getFileData(const char *pPathFile)
     }
     return 1;
 }
+
+Data HelperFunc::getData(const std::string &filename)
+{
+    unsigned long sz;
+    unsigned char * buf  = HelperFunc::getFileData(filename.c_str(), "rb", &sz);
+    if (!buf) {
+        return Data::Null;
+    }
+    Data data;
+    data.fastSet(buf, sz);
+    return data;
+}

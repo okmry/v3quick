@@ -4876,6 +4876,7 @@
 					"CC_USE_WEBSOCKET=1",
 					"CC_USE_SQLITE=1",
 					"CC_USE_TGA=1",
+					"CC_USE_TIFF=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
