@@ -216,7 +216,8 @@ std::string getCurAppPath(void)
 
 - (void) createWindowAndGLView
 {
-    float screenScale = [[NSScreen mainScreen] backingScaleFactor];
+//    float screenScale = [[NSScreen mainScreen] backingScaleFactor]; //Modi by SiShui
+    float screenScale = 1;
     
     // create opengl view
     cocos2d::Size frameSize = _project.getFrameSize();
