@@ -74,7 +74,6 @@ function UIButton:ctor(events, initialState, options)
     self.sprite_ = {}
     self.scale9_ = options and options.scale9
     self.scale9Size_ = nil
-    self.opacity_ = options and options.opacity
     self.labels_ = {}
     self.labelOffset_ = {0, 0}
     self.labelAlign_ = display.CENTER
@@ -275,38 +274,6 @@ end
 
 --[[--
 
-设置透明度
-
-@param number value 透明度
-
-@return UIButton
-
-]]
-function UIButton:setOpacity(value)
-    self.opacity_ = value
-
-    if self.opacity_ then
-        for i,v in ipairs(self.sprite_) do
-            self.sprite_[i]:setOpacity(self.opacity_)
-        end
-    end
-
-    return self
-end
-
---[[--
-
-得到透明度
-
-@return number
-
-]]
-function UIButton:getOpacity()
-    return self.opacity_
-end
-
---[[--
-
 设置按钮是否有效
 
 @param boolean enabled 是否有效
@@ -451,9 +418,6 @@ function UIButton:updateButtonImage_()
                     else
                         self.sprite_[i] = display.newSprite(v)
                     end
-                    if self.opacity_ then
-                        self.sprite_[i]:setOpacity(self.opacity_)
-                    end
                     self:addChild(self.sprite_[i], UIButton.IMAGE_ZORDER)
                 end
             else
@@ -467,9 +431,6 @@ function UIButton:updateButtonImage_()
                     end
                 else
                     self.sprite_[1] = display.newSprite(image)
-                end
-                if self.opacity_ then
-                    self.sprite_[1]:setOpacity(self.opacity_)
                 end
                 self:addChild(self.sprite_[1], UIButton.IMAGE_ZORDER)
             end
@@ -502,10 +463,6 @@ function UIButton:updateButtonLable_()
         local spriteSize = self.sprite_[1]:getContentSize()
         ox = ox + spriteSize.width * (0.5 - ap.x)
         oy = oy + spriteSize.height * (0.5 - ap.y)
-    end
-
-    if self.opacity_ then
-        label:setOpacity(self.opacity_)
     end
 
     for _, l in pairs(self.labels_) do

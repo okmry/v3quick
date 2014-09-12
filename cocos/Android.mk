@@ -77,6 +77,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH) \
                     $(LOCAL_PATH)/../external/webp/include/android \
                     $(LOCAL_PATH)/base \
                     $(QUICK_V3_LIB) \
+                    $(QUICK_V3_LIB)/extra \
                     $(LOCAL_PATH)/../external/nslog
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_2d_static

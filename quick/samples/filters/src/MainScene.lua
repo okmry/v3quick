@@ -93,7 +93,8 @@ function MainScene:_addUI()
 		:addTo(self)
 		:onButtonClicked(handler(self, self._onClearFilter))
 
-	self._title = ui.newTTFLabel({
+	self._title = cc.ui.UILabel.new({
+        UILabelType = 2,
 		text="Filters test",
 	})
 		:align(display.CENTER, display.cx, display.top-80)

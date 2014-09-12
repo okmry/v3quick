@@ -4,13 +4,13 @@
 --
 
 local eventDispatcher = cc.Director:getInstance():getEventDispatcher()
+local EditBoxLite = import(".EditBoxLite")
 
 local OpenProjectUI = class("OpenProjectUI", function()
         return cc.LayerColor:create(cc.c4b(56, 56, 56, 250))
     end)
 
 -- settings
-local font = "Monaco"
 local fontSize = 20
 local images = {
     normal = "#ButtonNormal.png",
@@ -72,22 +72,21 @@ function OpenProjectUI:onEnter()
 
     -- screen direction:
 
-    ui.newTTFLabel({
+    cc.ui.UILabel.new({
+        UILabelType = 2,
         text = "Screen Direction:",
         size = fontSize,
-        font = font,
         color = display.COLOR_WHITE,
-        x = 40,
-        y = display.top - 300,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         })
+    :pos(40, display.top - 300)
     :addTo(self)
 
     self.portaitCheckBox = 
     cc.ui.UICheckBoxButton.new(checkboxImages)
         :setButtonLabel(cc.ui.UILabel.new({text = "Portait", size = fontSize,  color = display.COLOR_WHITE}))
-        :setButtonLabelOffset(60, 0)
-        :setButtonLabelAlignment(display.CENTER)
+        :setButtonLabelOffset(30, 0)
+        :setButtonLabelAlignment(display.LEFT_CENTER)
         :align(display.LEFT_CENTER, 40, display.cy-20)
         :onButtonClicked(function() self.landscapeCheckBox:setButtonSelected(not self.portaitCheckBox:isButtonSelected()) end)
         :addTo(self)
@@ -96,30 +95,29 @@ function OpenProjectUI:onEnter()
     self.landscapeCheckBox = 
     cc.ui.UICheckBoxButton.new(checkboxImages)
         :setButtonLabel(cc.ui.UILabel.new({text = "Landscape", size = fontSize,  color = display.COLOR_WHITE}))
-        :setButtonLabelOffset(80, 0)
-        :setButtonLabelAlignment(display.CENTER)
+        :setButtonLabelOffset(30, 0)
+        :setButtonLabelAlignment(display.LEFT_CENTER)
         :align(display.LEFT_CENTER, 200, display.cy-20)
         :onButtonClicked(function() self.portaitCheckBox:setButtonSelected(not self.landscapeCheckBox:isButtonSelected()) end)
         :addTo(self)
 
     -- Options:
 
-    ui.newTTFLabel({
+    cc.ui.UILabel.new({
+        UILabelType = 2,
         text = "Options:",
         size = fontSize,
-        font = font,
         color = display.COLOR_WHITE,
-        x = 40,
-        y = display.top - 400,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         })
+    :pos(40, display.top - 400)
     :addTo(self)
 
     self.showDebugConsole =
     cc.ui.UICheckBoxButton.new(checkboxImages)
         :setButtonLabel(cc.ui.UILabel.new({text = "Show Debug Console", size = fontSize,  color = display.COLOR_WHITE}))
-        :setButtonLabelOffset(125, 0)
-        :setButtonLabelAlignment(display.CENTER)
+        :setButtonLabelOffset(30, 0)
+        :setButtonLabelAlignment(display.CENTER_LEFT)
         :align(display.LEFT_CENTER, 40, display.cy-120)
         :addTo(self)
         :setButtonSelected(true)
@@ -127,8 +125,8 @@ function OpenProjectUI:onEnter()
     self.writeDebugToFile =
     cc.ui.UICheckBoxButton.new(checkboxImages)
         :setButtonLabel(cc.ui.UILabel.new({text = "Write Debug Log to File", size = fontSize,  color = display.COLOR_WHITE}))
-        :setButtonLabelOffset(135, 0)
-        :setButtonLabelAlignment(display.CENTER)
+        :setButtonLabelOffset(30, 0)
+        :setButtonLabelAlignment(display.CENTER_LEFT)
         :align(display.LEFT_CENTER, display.cx, display.cy-120)
         :addTo(self)
         :setButtonSelected(true)
@@ -136,8 +134,8 @@ function OpenProjectUI:onEnter()
     self.loadPrecompiledFramework =
     cc.ui.UICheckBoxButton.new(checkboxImages)
         :setButtonLabel(cc.ui.UILabel.new({text = "Load precompiled framework", size = fontSize,  color = display.COLOR_WHITE}))
-        :setButtonLabelOffset(160, 0)
-        :setButtonLabelAlignment(display.CENTER)
+        :setButtonLabelOffset(30, 0)
+        :setButtonLabelAlignment(display.CENTER_LEFT)
         :align(display.LEFT_CENTER, 40, display.cy-170)
         :addTo(self)
         :setButtonSelected(true)
@@ -151,7 +149,8 @@ function OpenProjectUI:createYesOrNoButton()
     local button = cc.ui.UIPushButton.new(images, {scale9 = true})
     button:setAnchorPoint(0,0)
     button:setButtonSize(150, 40)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "Cancel",
             size = fontSize,
         }))
@@ -164,7 +163,8 @@ function OpenProjectUI:createYesOrNoButton()
     local createProjectbutton = cc.ui.UIPushButton.new(images, {scale9 = true})
     createProjectbutton:setAnchorPoint(0,0)
     createProjectbutton:setButtonSize(250, 40)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = " Open Project ",
             size = fontSize,
         }))
@@ -208,33 +208,33 @@ function OpenProjectUI:createLabelAndEditLineAndButton(holder, labelString, edit
     local node = display.newNode()
 
     -- label:
-    ui.newTTFLabel({
+    cc.ui.UILabel.new({
+        UILabelType = 2,
         text = labelString,
         size = fontSize,
-        font = font,
         color = display.COLOR_WHITE,
-        x = 40,
-        y = display.top - 55,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         })
+    :pos(40, display.top - 55)
     :addTo(node)
 
     -- edit line
-    local locationEditbox = ui.newEditBox({
+    local locationEditbox = EditBoxLite.create({
         image = "#ButtonNormal.png",
         size = cc.size(display.width-250, 40),
         x = 40,
         y = display.top - 120,
     })
     locationEditbox:setAnchorPoint(0,0)
-    node:addChild(locationEditbox)
     locationEditbox:setText(editLineString)
+    node:addChild(locationEditbox)
 
     -- button
     local selectButton = cc.ui.UIPushButton.new(images, {scale9 = true})
     selectButton:setAnchorPoint(0,0)
     selectButton:setButtonSize(150, 40)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = buttonString,
             size = fontSize,
         }))

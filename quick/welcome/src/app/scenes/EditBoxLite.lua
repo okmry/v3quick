@@ -8,6 +8,16 @@ local EditBoxLite = class("EditBoxLite", function()
         return display.newNode()
     end)
 
+function EditBoxLite.create(params)
+
+    if device.platform == "windows" then
+        return cc.ui.UIInput.new(params)
+    elseif device.platform == "mac" then
+        return EditBoxLite.new(params)
+    end
+
+end
+
 --[[
 
 @param: table params
@@ -44,7 +54,8 @@ function EditBoxLite:ctor(params)
                 self.label_:setString(e)
             end)
         ed:setFont(fontName, fontSize)
-        ed:showSingleLineEditBox(cc.rect(x, y, width, height))
+        local p = self:convertToWorldSpace(cc.p(0, 0))
+        ed:showSingleLineEditBox(cc.rect(p.x, p.y, width, height))
         ed:setText(self.label_:getString())
         self.label_:setVisible(false)
 

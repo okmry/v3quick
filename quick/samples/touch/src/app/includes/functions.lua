@@ -4,7 +4,11 @@ function createTouchableSprite(p)
     sprite:setContentSize(p.size)
 
     local cs = sprite:getContentSize()
-    local label = ui.newTTFLabel({text = p.label, color = p.labelColor})
+    local label = cc.ui.UILabel.new({
+            UILabelType = 2,
+            text = p.label,
+            color = p.labelColor})
+    label:align(display.CENTER)
     label:setPosition(cs.width / 2, label:getContentSize().height)
     sprite:addChild(label)
     sprite.label = label
@@ -17,7 +21,8 @@ function createSimpleButton(imageName, name, movable, listener)
 
     if name then
         local cs = sprite:getContentSize()
-        local label = ui.newTTFLabel({text = name, color = display.COLOR_BLACK})
+        local label = cc.ui.UILabel.new({
+            UILabelType = 2,text = name, color = display.COLOR_BLACK})
         label:setPosition(cs.width / 2, cs.height / 2)
         -- sprite:addChild(label)
     end

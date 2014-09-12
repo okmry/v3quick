@@ -57,12 +57,14 @@ function TestPerformance:onEnter()
     end
 
     cc.ui.UIPushButton.new({})
-        :setButtonLabel("normal", ui.newTTFLabel({
+        :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "-",
             size = 65,
             color = cc.c3b(0,200,20)
         }))
-        :setButtonLabel("pressed", ui.newTTFLabel({
+        :setButtonLabel("pressed", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "-",
             size = 80,
             color = cc.c3b(0,200,20)
@@ -72,12 +74,14 @@ function TestPerformance:onEnter()
         :addTo(self)
 
     cc.ui.UIPushButton.new({})
-        :setButtonLabel("normal", ui.newTTFLabel({
+        :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "+",
             size = 65,
             color = cc.c3b(0,200,20)
         }))
-        :setButtonLabel("pressed", ui.newTTFLabel({
+        :setButtonLabel("pressed", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "+",
             size = 80,
             color = cc.c3b(0,200,20)

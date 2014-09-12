@@ -30,25 +30,29 @@ function WelcomeScene:createLogo(node)
         :align(display.LEFT_TOP, display.left + 48, display.top - 24)
         :addTo(node)
 
-    local label = ui.newTTFLabel({
-        text = "quick-cocos2d-x",
+    local label = cc.ui.UILabel.new({
+		UILabelType = 2,
+        text = cc.FRAMEWORK_NAME,
         size = 38,
         color = display.COLOR_WHITE,
-        x = 140,
+        x = 138,
         y = display.top - 55,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         })
+    label:align(display.LEFT_CENTER)
     node:addChild(label)
 
 
-    label = ui.newTTFLabel({
-        text = "v3.2 beta1",
+    label = cc.ui.UILabel.new({
+		UILabelType = 2,
+        text = "v" .. cc.VERSION,
         size = 14,
         color = cc.c3b(243,156,18),
         x = 140 + label:getContentSize().width,
         y = display.top - 36,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         })
+    label:align(display.LEFT_CENTER)
     node:addChild(label)
 end
 
@@ -66,9 +70,10 @@ function WelcomeScene:createButtons(node)
 
     cc.ui.UIPushButton.new(images, {scale9 = true})
     :setButtonSize(buttonWidth, buttonHeight)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+		    UILabelType = 2,
             text = "打开",
-            size = 18
+            size = 18,
         }))
     :pos(display.width-padding, top)
     :addTo(node)
@@ -89,9 +94,10 @@ function WelcomeScene:createButtons(node)
     top = top - 68
     cc.ui.UIPushButton.new(images, {scale9 = true})
     :setButtonSize(buttonWidth, buttonHeight)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+		    UILabelType = 2,
             text = "打包",
-            size = 18
+            size = 18,
         }))
     :pos(display.width-padding, top)
     :addTo(node)
@@ -103,9 +109,10 @@ function WelcomeScene:createButtons(node)
     top = top - 68
     cc.ui.UIPushButton.new({normal="#RedButtonNormal.png", pressed="#RedButtonPressed.png", disabled = "#ButtonDisabled.png",}, {scale9 = true})
     :setButtonSize(buttonWidth, buttonHeight)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+		    UILabelType = 2,
             text = "删除",
-            size = 18
+            size = 18,
         }))
     :pos(display.width-padding, top)
     :addTo(node)
@@ -127,9 +134,10 @@ function WelcomeScene:createButtons(node)
     top = top - 180
     cc.ui.UIPushButton.new(images, {scale9 = true})
     :setButtonSize(buttonWidth, buttonHeight)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+		    UILabelType = 2,
             text = "新建项目",
-            size = 18
+            size = 18,
         }))
     :pos(display.width-padding, top)
     :addTo(node)
@@ -141,9 +149,10 @@ function WelcomeScene:createButtons(node)
     top = top - 68
     cc.ui.UIPushButton.new(images, {scale9 = true})
     :setButtonSize(buttonWidth, buttonHeight)
-    :setButtonLabel("normal", ui.newTTFLabel({
+    :setButtonLabel("normal", cc.ui.UILabel.new({
+		    UILabelType = 2,
             text = "导入项目",
-            size = 18
+            size = 18,
         }))
     :pos(display.width-padding, top)
     :addTo(node)
@@ -161,29 +170,27 @@ function WelcomeScene:createListItem(icon, title, path)
     -- icon
     cc.ui.UIImage.new(icon, {scale9 = true})
     :setLayoutSize(48, 48)
-    :pos(10, 20)
+    :pos(20, 20)
     :addTo(container)
 
     -- title
     title = title:splitBySep('/')
     local titleLabel = cc.ui.UILabel.new({
             text = title[#title],
-            size = 28,
-            font = "Monaco",
+            size = 26,
             align = cc.ui.TEXT_ALIGN_LEFT,
             color = display.COLOR_WHITE})
-    titleLabel:pos(70, 50)
+    titleLabel:pos(80, 50)
     titleLabel:addTo(container)
 
     -- path
     cc.ui.UILabel.new({
         text = stripPath(path, 80),
         size = 12,
-        font = "Monaco",
         align = cc.ui.TEXT_ALIGN_LEFT,
         color = display.COLOR_WHITE,
         })
-    :pos(70,15)
+    :pos(80,15)
     :addTo(container)
 
     display.newLine(
@@ -309,24 +316,28 @@ function WelcomeScene:createCopyright(node)
     bg:setContentSize(cc.size(display.width, 48))
     node:addChild(bg)
 
-    local label = ui.newTTFLabel({
+    local label = cc.ui.UILabel.new({
+		UILabelType = 2,
         text = "Copyright (c) 2012-2014 chukong-inc.com, Powered by quick-cocos2d-x.",
-        size = 17,
+        size = 15,
         color = cc.c3b(128, 128, 128),
         x = 48,
         y = display.bottom + 24,
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
     })
+    label:align(display.LEFT_CENTER)
     node:addChild(label)
 
-    label = ui.newTTFLabel({
+    label = cc.ui.UILabel.new({
+		UILabelType = 2,
         text = "Code Less, Play More",
-        size = 17,
+        size = 15,
         color = cc.c3b(128, 128, 128),
-        x = display.width - 96,
+        x = display.width - 38,
         y = display.bottom + 24,
-        align = ui.TEXT_ALIGN_RIGHT,
+        align = cc.ui.TEXT_ALIGN_CENTER,
         })
+    label:setAnchorPoint(1, 0.5)
     node:addChild(label)
 end
 
@@ -344,7 +355,7 @@ function WelcomeScene:createTitleBar(node)
 
     cc.ui.UILabel.new({
         text = "0",
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         color = cc.c3b(255,255,255,255),
         size = 18,
     })
@@ -360,7 +371,7 @@ function WelcomeScene:createTitleBar(node)
 
     cc.ui.UILabel.new({
         text = stripPath("<user>", 9),
-        align = ui.TEXT_ALIGN_LEFT,
+        align = cc.ui.TEXT_ALIGN_LEFT,
         color = cc.c3b(255,255,255,255),
         size = 18,
     })
@@ -379,6 +390,7 @@ function WelcomeScene:createSamples(node)
     self.samples = dofile(cc.player.quickRootPath .. "quick/samples/samples.lua")
     self.lvGrid = cc.ui.UIListView.new {
         bg = "#TabButtonSelected.png",
+        bgScale9 = true,
         viewRect = cc.rect(40,92, 40*17, 40*9+28),
         direction = cc.ui.UIScrollView.DIRECTION_VERTICAL,
         scrollbarImgV = "#ScrollBarHandler.png"}
@@ -446,12 +458,12 @@ function WelcomeScene:createOneSampleUI(sample, item)
 end
 
 function WelcomeScene:createDemoTitle(sample)
-    local label = ui.newTTFLabel({
+    local label = cc.ui.UILabel.new({
+		UILabelType = 2,
         text = sample.title,
-        align = ui.TEXT_ALIGNMENT_CENTER,
+        align = cc.ui.TEXT_ALIGNMENT_CENTER,
         color = cc.c3b(144,144,144),
         size = 14,
-        font = "Monaco",
     })
     label:setAnchorPoint(0.5, 0.5)
     label:setPosition(100, 160)
@@ -468,14 +480,15 @@ function WelcomeScene:createDemoDescription(sample)
         color = cc.c3b(255,0,0)
     end
 
-    local label = ui.newTTFLabel({
-        text = title,
-        align = ui.TEXT_ALIGNMENT_CENTER,
-        color = color,
-        size = 12,
+    local label = cc.ui.UILabel.new({
+        UILabelType = 2,
+        text        = title,
+        align       = cc.ui.TEXT_ALIGNMENT_CENTER,
+        color       = color,
+        size        = 12,
     })
     label:setAnchorPoint(0.5, 0.5)
-    label:setPosition(100, 150)
+    label:setPosition(100, 145)
     return label
 end
 

@@ -9,6 +9,13 @@ function WelcomeApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/hd")
     display.addSpriteFrames("Images_hd.plist", "Images_hd.png")
 
+    -- set default font of label
+    if device.platform == "windows" then
+        cc.ui.UILabel.DEFAULT_TTF_FONT = "NotoSansHans-Light.otf"
+    elseif device.platform == "mac" then
+        cc.ui.UILabel.DEFAULT_TTF_FONT = "Monaco"
+    end
+
     local evl = cc.EventListenerCustom:create("WELCOME_LIST_SAMPLES", function() self:enterSampleScene() end )
     cc.Director:getInstance():getEventDispatcher():addEventListenerWithFixedPriority(evl,1)
 

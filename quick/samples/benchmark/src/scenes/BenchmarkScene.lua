@@ -25,7 +25,8 @@ function BenchmarkScene:ctor()
         :pos(display.right - 100, display.top - 100)
         :addTo(self)
 
-    self.label = ui.newBMFontLabel({
+    self.label = cc.ui.UILabel.new({
+        UILabelType = 1,
         text = "00000",
         font = "UIFont.fnt",
         x = display.cx,

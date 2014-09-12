@@ -30,6 +30,7 @@ THE SOFTWARE.
 #include <ctype.h>
 
 #include "base/CCData.h"
+#include "base/ccConfig.h" // CC_USE_JPEG, CC_USE_TIFF, CC_USE_WEBP
 #include "apptools/HelperFunc.h"
 
 
@@ -65,7 +66,10 @@ extern "C"
 #include "tiffio.h"
 #endif
 #include "base/etc1.h"
+    
+#if CC_USE_JPEG
 #include "jpeglib.h"
+#endif // CC_USE_JPEG
 }
 #include "base/s3tc.h"
 #include "base/atitc.h"
@@ -740,6 +744,7 @@ namespace
  *
  * Here's the extended error handler struct:
  */
+#if CC_USE_JPEG
     struct MyErrorMgr
     {
         struct jpeg_error_mgr pub;	/* "public" fields */
@@ -771,10 +776,12 @@ namespace
         /* Return control to the setjmp point */
         longjmp(myerr->setjmp_buffer, 1);
     }
+#endif // CC_USE_JPEG
 }
 
 bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
 {
+#if CC_USE_JPEG
     /* these are standard libjpeg structures for reading(decompression) */
     struct jpeg_decompress_struct cinfo;
     /* We use our private extension JPEG error handler.
@@ -868,6 +875,9 @@ bool Image::initWithJpgData(const unsigned char * data, ssize_t dataLen)
         free(row_pointer[0]);
     };
     return bRet;
+#else
+    return false;
+#endif // CC_USE_JPEG
 }
 
 bool Image::initWithPngData(const unsigned char * data, ssize_t dataLen)
@@ -2143,6 +2153,7 @@ bool Image::saveImageToPNG(const std::string& filePath, bool isToRGB)
 }
 bool Image::saveImageToJPG(const std::string& filePath)
 {
+#if CC_USE_JPEG
     bool bRet = false;
     do 
     {
@@ -2219,6 +2230,10 @@ bool Image::saveImageToJPG(const std::string& filePath)
         bRet = true;
     } while (0);
     return bRet;
+#else
+    CCLOG("jpeg is not enabled, please enable it in ccConfig.h");
+    return false;
+#endif // CC_USE_JPEG
 }
 
 void Image::premultipliedAlpha()

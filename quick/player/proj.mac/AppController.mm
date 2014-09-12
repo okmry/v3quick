@@ -222,15 +222,15 @@ std::string getCurAppPath(void)
     // create opengl view
     cocos2d::Size frameSize = _project.getFrameSize();
     float frameScale = 1.0f;
-    if (_project.isRetinaDisplay())
-    {
-        frameSize.width *= screenScale;
-        frameSize.height *= screenScale;
-    }
-    else
-    {
-        frameScale = screenScale;
-    }
+//    if (_project.isRetinaDisplay())
+//    {
+//        frameSize.width *= screenScale;
+//        frameSize.height *= screenScale;
+//    }
+//    else
+//    {
+//        frameScale = screenScale;
+//    }
 
     const cocos2d::Rect frameRect = cocos2d::Rect(0, 0, frameSize.width, frameSize.height);
     GLView *eglView = GLView::createWithRect("player", frameRect, frameScale, _project.isResizeWindow());

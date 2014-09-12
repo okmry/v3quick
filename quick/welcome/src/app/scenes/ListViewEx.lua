@@ -3,6 +3,7 @@ local ListViewEx = class("ListViewEx", cc.ui.UIListView)
 
 
 function ListViewEx:ctor(params)
+    params.bgScale9 = true
     ListViewEx.super.ctor(self, params)
 
     self.currentIndex_ = 0

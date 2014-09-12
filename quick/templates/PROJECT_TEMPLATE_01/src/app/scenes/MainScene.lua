@@ -4,7 +4,8 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
-    ui.newTTFLabel({text = "Hello, World", size = 64, align = ui.TEXT_ALIGN_CENTER})
+    cc.ui.UILabel.new({
+            UILabelType = 2, text = "Hello, World", size = 64, align = cc.ui.TEXT_ALIGN_CENTER})
         :pos(display.cx, display.cy)
         :addTo(self)
 end

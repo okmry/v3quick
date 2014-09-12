@@ -84,16 +84,19 @@ function TestUIButtonScene:createButtonGroup1()
 
     cc.ui.UIPushButton.new(TestUIButtonScene.PUSH_BUTTON_IMAGES, {scale9 = true})
         :setButtonSize(240, 60)
-        :setButtonLabel("normal", ui.newTTFLabel({
+        :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "This is a PushButton",
             size = 18
         }))
-        :setButtonLabel("pressed", ui.newTTFLabel({
+        :setButtonLabel("pressed", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "Button Pressed",
             size = 18,
             color = cc.c3b(255, 64, 64)
         }))
-        :setButtonLabel("disabled", ui.newTTFLabel({
+        :setButtonLabel("disabled", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "Button Disabled",
             size = 18,
             color = cc.c3b(0, 0, 0)

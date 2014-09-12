@@ -98,12 +98,13 @@ function UpdateScene:ctor()
         --    self.path = "/mnt/sdcard/quick_x_update/"
         --end
 
-    local label = ui.newTTFLabel({
+    local label = cc.ui.UILabel.new({
+        UILabelType = 2,
         text = "Loading...",
         size = 64,
         x = display.cx,
         y = display.cy,
-        align = ui.TEXT_ALIGN_CENTER
+        align = cc.ui.TEXT_ALIGN_CENTER
     })
     self:addChild(label)
 end

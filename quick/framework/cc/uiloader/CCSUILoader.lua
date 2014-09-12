@@ -45,7 +45,7 @@ function CCSUILoader:parserJson(jsonVal)
 		root = jsonVal.widgetTree
 	end
 	if not root then
-		printInfo("CCSUILoader - parserJson havn't found root noe")
+		printInfo("CCSUILoader - parserJson havn't found root node")
 		return
 	end
 	self:prettyJson(root)
@@ -100,8 +100,8 @@ function CCSUILoader:generateUINode(jsonNode, transX, transY, parent)
 	end
 	uiNode:setRotation(options.rotation or 0)
 
-	uiNode:setScaleX(options.scaleX or 1)
-	uiNode:setScaleY(options.scaleY or 1)
+	uiNode:setScaleX((options.scaleX or 1) * uiNode:getScaleX())
+	uiNode:setScaleY((options.scaleY or 1) * uiNode:getScaleY())
 	uiNode:setVisible(options.visible)
 	uiNode:setLocalZOrder(options.ZOrder or 0)
 	-- uiNode:setGlobalZOrder(options.ZOrder or 0)
@@ -510,18 +510,13 @@ function CCSUILoader:createCheckBox(options)
 end
 
 function CCSUILoader:createBMFontLabel(options)
-	local node = ui.newBMFontLabel({
+	local node = cc.ui.UILabel.new({
+		UILabelType = 1,
 		text = options.text,
 		font = options.fileNameData.path,
-		textAlign = ui.TEXT_ALIGN_CENTER,
-		x = options.x,
-		y = options.y})
-	if 1 == options.anchorPointY then
-		node:setAlignment(ui.TEXT_ALIGN_RIGHT)
-	elseif 0.5 == options.anchorPointY then
-	else
-		node:setAlignment(ui.TEXT_ALIGN_RIGHT)
-	end
+		textAlign = cc.ui.TEXT_ALIGN_CENTER})
+	node:align(self:getAnchorType(options.anchorPointX or 0.5, options.anchorPointY or 0.5),
+		options.x or 0, options.y or 0)
 
 	return node
 end
@@ -575,7 +570,8 @@ function CCSUILoader:createEditBox(options)
 	local editBox
 
 	if self.bUseEditBox then
-		editBox = ui.newEditBox({
+		editBox = cc.ui.UIInput.new({
+			UIInputType = 1,
 	        size = cc.size(options.width, options.height)
 	    	})
 	    editBox:setPlaceHolder(options.placeHolder)
@@ -590,7 +586,8 @@ function CCSUILoader:createEditBox(options)
 		end
 		editBox:setPosition(options.x, options.y)
 	else
-		editBox = ui.newTextField({
+		editBox = cc.ui.UIInput.new({
+		UIInputType = 2,
         placeHolder = options.placeHolder,
         x = options.x,
         y = options.y,
@@ -1000,6 +997,10 @@ function CCSUILoader:calcChildPosByName_(children, name, parentSize)
 
 	options = child.options
 	layoutParameter = options.layoutParameter
+
+	if not layoutParameter then
+		return
+	end
 
 	if 1 == layoutParameter.type then
 		if 1 == layoutParameter.gravity then

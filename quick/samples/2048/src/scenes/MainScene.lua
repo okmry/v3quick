@@ -235,7 +235,8 @@ function MainScene:createButtons()
     }
     cc.ui.UIPushButton.new(images, {scale9 = true})
         :setButtonSize(200, 60)
-        :setButtonLabel("normal", ui.newTTFLabel({
+        :setButtonLabel("normal", cc.ui.UILabel.new({
+            UILabelType = 2,
             text = "New Game",
             size = 32
         }))
