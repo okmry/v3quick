@@ -211,6 +211,38 @@ std::string getCurAppPath(void)
 //    _project.setWindowOffset(Vec2(settings.offsetX, settings.offsetY));
 }
 
+- (void) createEditMenu
+{
+    NSApplication *thisApp = [NSApplication sharedApplication];
+    NSMenu *mainMenu = [thisApp mainMenu];
+
+    NSMenu *menu = [[[NSMenu alloc] initWithTitle:@"Edit"] autorelease];
+    NSMenuItem *soMenuItem = [[NSMenuItem alloc] initWithTitle:@""
+                                                        action:nil
+                                                 keyEquivalent:@""];
+
+    NSUInteger index = 2;
+    if (index > [mainMenu itemArray].count)
+        index = [mainMenu itemArray].count;
+    [mainMenu insertItem:soMenuItem atIndex:index];
+    [mainMenu setSubmenu:menu forItem:soMenuItem];
+
+
+    [menu addItemWithTitle:@"Copy" action:@selector(copy:) keyEquivalent:@"c"];
+    [menu addItemWithTitle:@"Select All" action:@selector(selectAll:) keyEquivalent:@"a"];
+
+    /**
+    // Find
+    [menu addItem:[NSMenuItem separatorItem]];
+    NSMenu *findMenu = [[[NSMenu alloc] initWithTitle:@"Find"] autorelease];
+    [menu setSubmenu:findMenu forItem:[menu addItemWithTitle:@"Find" action:nil keyEquivalent:@""]];
+    [findMenu addItemWithTitle:@"Find" action:@selector(performFindPanelAction:) keyEquivalent:@"f"];
+    [findMenu addItemWithTitle:@"Find Next" action:@selector(performFindPanelAction:) keyEquivalent:@"g"];
+    [[findMenu addItemWithTitle:@"Find Previous" action:@selector(performFindPanelAction:) keyEquivalent:@"g"]
+                                    setKeyEquivalentModifierMask:NSCommandKeyMask | NSShiftKeyMask];
+     **/
+}
+
 #pragma mark -
 #pragma mark functions
 
@@ -332,6 +364,7 @@ std::string getCurAppPath(void)
     }
 
     [self loadLuaConfig];
+    [self createEditMenu];
     if (!_project.isAppMenu())
     {
         NSMenu *mainMenu = [[NSApplication sharedApplication] mainMenu];

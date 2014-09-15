@@ -94,7 +94,7 @@ end
 
 local scale, scaleX, scaleY
 
-if CONFIG_SCREEN_AUTOSCALE then
+if CONFIG_SCREEN_AUTOSCALE and CONFIG_SCREEN_AUTOSCALE ~="NONE" then
     if type(CONFIG_SCREEN_AUTOSCALE_CALLBACK) == "function" then
         scaleX, scaleY = CONFIG_SCREEN_AUTOSCALE_CALLBACK(w, h, device.model)
     end
@@ -121,6 +121,10 @@ if CONFIG_SCREEN_AUTOSCALE then
         end
         glview:setDesignResolutionSize(CONFIG_SCREEN_WIDTH, CONFIG_SCREEN_HEIGHT, cc.ResolutionPolicy.NO_BORDER)
     end
+else
+    CONFIG_SCREEN_WIDTH = w
+    CONFIG_SCREEN_HEIGHT = h
+    scale = 1.0
 end
 
 local winSize = sharedDirector:getWinSize()

@@ -8,8 +8,7 @@ echo.
 echo updating all framework_precompiled_wp8.zip
 echo.
 
-dir /s/b samples | find "framework_precompiled_wp8.zip" > ___tmp___
-dir /s/b templates | find "framework_precompiled_wp8.zip" >> ___tmp___
+dir /s/b %QUICK_V3_ROOT% | find "res\framework_precompiled_wp8.zip" > ___tmp___
 
 for /f %%f in (___tmp___) do (
     echo %%f
@@ -27,8 +26,7 @@ echo.
 echo updating all framework_precompiled.zip
 echo.
 
-dir /s/b samples | find "framework_precompiled.zip" > ___tmp___
-dir /s/b templates | find "framework_precompiled.zip" >> ___tmp___
+dir /s/b %QUICK_V3_ROOT% | find "res\framework_precompiled.zip" > ___tmp___
 
 for /f %%f in (___tmp___) do (
     echo %%f
@@ -40,3 +38,5 @@ del ___tmp___
 echo.
 echo DONE
 echo.
+
+cd "%DIR%"

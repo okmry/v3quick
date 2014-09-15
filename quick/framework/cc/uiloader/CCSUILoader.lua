@@ -386,6 +386,9 @@ function CCSUILoader:createSprite(options)
 	if not options.ignoreSize then
 		node:setContentSize(cc.size(options.width, options.height))
 	end
+	if options.opacity then
+		node:setOpacity(options.opacity)
+	end
 	node:setPositionX(options.x or 0)
 	node:setPositionY(options.y or 0)
 	node:setAnchorPoint(
@@ -441,8 +444,14 @@ end
 
 function CCSUILoader:createButton(options)
 	local node = cc.ui.UIPushButton.new(self:getButtonStateImages(options),
-		{scale9 = not options.ignoreSize})
+		{scale9 = not options.ignoreSize,
+		flipX = options.flipX,
+		flipY = options.flipY})
 
+	if options.opacity then
+		node:setCascadeOpacityEnabled(true)
+		node:setOpacity(options.opacity)
+	end
 	if options.text then
 		node:setButtonLabel(
 			cc.ui.UILabel.new({text = options.text,
@@ -525,9 +534,10 @@ function CCSUILoader:createLabel(options)
 	local node = cc.ui.UILabel.new({text = options.text,
 		font = options.fontName,
 		size = options.fontSize,
-		color = cc.c3b(options.colorR, options.colorG, options.colorB),
+		color = cc.c3b(options.colorR or 255, options.colorG or 255, options.colorB or 255),
 		align = options.hAlignment,
 		valign = options.vAlignment,
+		dimensions = cc.size(options.areaWidth or 0, options.areaHeight or 0),
 		x = options.x, y = options.y})
 	if not options.ignoreSize then
 		node:setLayoutSize(options.areaWidth, options.areaHeight)

@@ -11,7 +11,7 @@ echo ""
 # echo templates/PROJECT_TEMPLATE_01/res/framework_precompiled.zip
 # cp lib/framework_precompiled/framework_precompiled.zip templates/PROJECT_TEMPLATE_01/res/
 
-for dest in `find samples templates -type f | grep "/res/framework_precompiled.zip"`
+for dest in `find ${QUICK_V3_ROOT} -type f | grep "/res/framework_precompiled.zip"`
 do
     echo $dest
     cp lib/framework_precompiled/framework_precompiled.zip $dest
@@ -23,7 +23,7 @@ echo ""
 echo "updating all framework_precompiled_wp8.zip"
 echo ""
 
-for dest in `find samples templates -type f | grep "/res/framework_precompiled_wp8.zip"`
+for dest in `find ${QUICK_V3_ROOT} -type f | grep "/res/framework_precompiled_wp8.zip"`
 do
     echo $dest
     cp lib/framework_precompiled/framework_precompiled_wp8.zip $dest
