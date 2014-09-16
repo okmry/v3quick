@@ -72,75 +72,11 @@ local data =
     },
 
     {
-        title       = "dragonbones",
-        description = "DragonBones 骨骼动画",
-        path        = "samples/dragonbones",
-        image       = "dragonbones_ss.png"
-    },
-
-    {
-        title       = "editbox",
-        description = "编辑框示例",
-        path        = "samples/editbox",
-        image       = "editbox_ss.png"
-    },
-
-    {
-        title       = "iap4ios",
-        description = "iOS IAP 使用（真机）",
-        path        = "samples/iap4ios",
-        image       = "iap4ios_ss.png"
-    },
-
-    {
-        title       = "luajavabridge",
-        description = "Lua Java 互操作（真机）",
-        path        = "samples/luajavabridge",
-        image       = "luajavabridge_ss.png"
-    },
-
-    {
-        title       = "luasocket",
-        description = "Socket 网络",
-        path        = "samples/luasocket",
-        image       = "luasocket_ss.png"
-    },
-
-    {
-        title       = "mvc",
-        description = "MVC 模式",
-        path        = "samples/mvc",
-        image       = "mvc_ss.png"
-    },
-
-    {
-        title       = "nightclub",
-        description = "一个游戏 demo",
-        path        = "samples/nightclub",
-        image       = "nightclub_ss.png"
-    },
-
-    {
-        title       = "statemachine",
-        description = "状态机使用",
-        path        = "samples/statemachine",
-        image       = "statemachine_ss.png"
-    },
-
-    {
         title       = "tests",
         description = "测试",
         path        = "samples/tests",
         image       = "tests_ss.png"
     },
-
-    {
-        title       = "websockets",
-        description = "WebScokets 演示",
-        path        = "samples/websockets",
-        image       = "websockets_ss.png"
-    },
-
 }
 
 return data

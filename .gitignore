@@ -1,6 +1,7 @@
 
 .*
 *.o
+dist_workdir/
 
 # Ignore thumbnails created by windows
 Thumbs.db
@@ -41,7 +42,7 @@ ipch/
 
 # Ignore files build by ndk and eclipse
 libs/
-bin/
+proj.android/bin/
 obj/
 gen/
 assets/
@@ -59,6 +60,7 @@ xcschememanagement.plist
 ._.*
 xcuserdata/
 DerivedData/
+build.xcarchive/
 
 # Android
 project.properties
