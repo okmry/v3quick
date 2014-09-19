@@ -29,6 +29,7 @@ xcopy /s /q "%APP_ROOT%src\*.*" "%APP_ANDROID_ROOT%assets\src\"
 echo - copy resources
 mkdir "%APP_ANDROID_ROOT%assets\res"
 xcopy /s /q "%APP_ROOT%res\*.*" "%APP_ANDROID_ROOT%assets\res\"
+del "%APP_ANDROID_ROOT%assets\res\framework_precompiled_wp8.zip"
 
 echo Using prebuilt externals
 "%ANDROID_NDK_ROOT%\ndk-build" %ANDROID_NDK_BUILD_FLAGS% NDK_DEBUG=%NDK_DEBUG% %NDK_BUILD_FLAGS% -C %APP_ANDROID_ROOT% NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%/external;%COCOS2DX_CORE%;%QUICK_V3_LIB%

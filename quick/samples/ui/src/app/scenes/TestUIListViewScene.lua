@@ -95,13 +95,6 @@ function TestUIListViewScene:createListView5()
 end
 
 function TestUIListViewScene:touchListener(event)
-    if not event.listView:isItemInViewRect(event.itemPos) then
-        print("TestUIListViewScene item not in view rect")
-        return
-    end
-
-    -- dump(event, "TestUIListViewScene - event:")
-    print("TestUIListViewScene event:" .. event.name .. " pos:" .. event.itemPos)
     local listView = event.listView
     if "clicked" == event.name then
         if 3 == event.itemPos then

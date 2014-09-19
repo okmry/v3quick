@@ -70,13 +70,6 @@ local data =
         path        = "samples/coinflip",
         image       = "coinflip_ss.png"
     },
-
-    {
-        title       = "tests",
-        description = "测试",
-        path        = "samples/tests",
-        image       = "tests_ss.png"
-    },
 }
 
 return data

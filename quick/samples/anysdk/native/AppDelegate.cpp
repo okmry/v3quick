@@ -33,7 +33,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         }
     }
 #endif //CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
+    
     // initialize director
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
@@ -46,33 +46,33 @@ bool AppDelegate::applicationDidFinishLaunching()
         director->setOpenGLView(glview);
 #endif
     }
-
+    
     // turn on display FPS
     director->setDisplayStats(true);
-
+    
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0 / 60);
-
+    
     // register lua engine
     LuaEngine* pEngine = LuaEngine::getInstance();
     ScriptEngineManager::getInstance()->setScriptEngine(pEngine);
-
+    
     LuaStack *pStack = pEngine->getLuaStack();
-
+    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // load framework
     pStack->loadChunksFromZIP("res/framework_precompiled.zip");
-
+    
     // set script path
     string path = FileUtils::getInstance()->fullPathForFilename("src/main.lua");
 
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // load framework
     pStack->loadChunksFromZIP("res/framework_precompiled_wp8.zip");
-
+    
     // set script path
     string path = FileUtils::getInstance()->fullPathForFilename("src/main.lua");
-
+    
 #else
     // load framework
     if (_projectConfig.isLoadPrecompiledFramework())
@@ -80,11 +80,11 @@ bool AppDelegate::applicationDidFinishLaunching()
         const string precompiledFrameworkPath = SimulatorConfig::getInstance()->getPrecompiledFrameworkPath();
         pStack->loadChunksFromZIP(precompiledFrameworkPath.c_str());
     }
-
+    
     // set script path
     string path = FileUtils::getInstance()->fullPathForFilename(_projectConfig.getScriptFileRealPath().c_str());
 #endif
-
+    
 #if CC_TARGET_PLATFORM == CC_PLATFORM_MAC
     // Code IDE
     if (_projectConfig.getDebuggerType() == kCCLuaDebuggerCodeIDE)
@@ -92,7 +92,7 @@ bool AppDelegate::applicationDidFinishLaunching()
         if (startRuntime()) return true;
     }
 #endif //CC_TARGET_PLATFORM == CC_PLATFORM_MAC
-
+    
     size_t pos;
     while ((pos = path.find_first_of("\\")) != std::string::npos)
     {
@@ -103,19 +103,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     {
         const string dir = path.substr(0, p);
         pStack->addSearchPath(dir.c_str());
-
+        
         p = dir.find_last_of("/\\");
         if (p != dir.npos)
         {
             pStack->addSearchPath(dir.substr(0, p).c_str());
         }
     }
-
+    
     string env = "__LUA_STARTUP_FILE__=\"";
     env.append(path);
     env.append("\"");
     pEngine->executeString(env.c_str());
-
+    
     CCLOG("------------------------------------------------");
     CCLOG("LOAD LUA FILE: %s", path.c_str());
     CCLOG("------------------------------------------------");

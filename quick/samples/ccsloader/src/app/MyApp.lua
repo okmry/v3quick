@@ -65,6 +65,8 @@ end
 
 function MyApp:loadCCSJsonFile(scene, jsonFile)
     local node, width, height = cc.uiloader:load(jsonFile)
+    width = width or display.width
+    height = height or display.height
     if node then
         node:setPosition((display.width - width)/2, (display.height - height)/2)
         -- node:setPosition(0, 0)

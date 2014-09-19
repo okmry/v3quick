@@ -34,6 +34,7 @@ local UIScrollView = class("UIScrollView", function()
 end)
 
 UIScrollView.BG_ZORDER 				= -100
+UIScrollView.TOUCH_ZORDER 			= -99
 
 UIScrollView.DIRECTION_BOTH			= 0
 UIScrollView.DIRECTION_VERTICAL		= 1
@@ -83,6 +84,10 @@ function UIScrollView:ctor(params)
 	if params.scrollbarImgV then
 		self.sbV = display.newScale9Sprite(params.scrollbarImgV, 100):addTo(self)
 	end
+
+	-- touchOnContent true:当触摸在滚动内容上才有效 false:当触摸在显示区域(viewRect_)就有效
+	-- 当内容小于显示区域时，两者就有区别了
+	self:setTouchType(params.touchOnContent or true)
 
 	self:addBgColorIf(params)
 	self:addBgGradientColorIf(params)
@@ -229,6 +234,24 @@ end
 
 --[[--
 
+设置触摸响应方式
+true:当触摸在滚动内容上才有效 false:当触摸在显示区域(viewRect_)就有效
+内容大于显示区域时，两者无差别
+内容小于显示区域时，true:在空白区域触摸无效,false:在空白区域触摸也可滚动内容
+
+@param boolean bTouchOnContent 是否触控到滚动内容上才有效
+
+@return UIScrollView
+
+]]
+function UIScrollView:setTouchType(bTouchOnContent)
+	self.touchOnContent = bTouchOnContent
+
+	return self
+end
+
+--[[--
+
 重置位置,主要用在纵向滚动时
 
 ]]
@@ -295,14 +318,15 @@ function UIScrollView:addScrollNode(node)
 		self.viewRect_ = self.scrollNode:getCascadeBoundingBox()
 		self:setViewRect(self.viewRect_)
 	end
-	node:setTouchSwallowEnabled(true)
+	node:setTouchSwallowEnabled(false)
 	node:setTouchEnabled(true)
-	node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-        return self:onTouch_(event)
-    end)
+	-- node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+ --        return self:onTouch_(event)
+ --    end)
     node:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function (event)
         return self:onTouchCapture_(event)
     end)
+	self:addTouchNode()
 
     return self
 end
@@ -363,6 +387,13 @@ function UIScrollView:onTouch_(event)
 	if "began" == event.name and not self:isTouchInViewRect(event) then
 		printInfo("UIScrollView - touch didn't in viewRect")
 		return false
+	end
+
+	if "began" == event.name and self.touchOnContent then
+		local cascadeBound = self.scrollNode:getCascadeBoundingBox()
+		if not cc.rectContainsPoint(cascadeBound, cc.p(event.x, event.y)) then
+			return false
+		end
 	end
 
 	if "began" == event.name then
@@ -741,42 +772,72 @@ end
 
 --[[--
 
+加一个大小为viewRect的touch node
+
+]]
+function UIScrollView:addTouchNode()
+	local node
+
+	if self.touchNode_ then
+		node = self.touchNode_
+	else
+		node = display.newNode()
+		self.touchNode_ = node
+
+		node:setLocalZOrder(UIScrollView.TOUCH_ZORDER)
+		node:setTouchSwallowEnabled(true)
+		node:setTouchEnabled(true)
+		node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+	        return self:onTouch_(event)
+	    end)
+
+	    self:addChild(node)
+	end
+
+	node:setContentSize(self.viewRect_.width, self.viewRect_.height)
+	node:setPosition(self.viewRect_.x, self.viewRect_.y)
+
+    return self
+end
+
+--[[--
+
 scrollView的填充方法，可以自动把一个table里的node有序的填充到scrollview里。
 
 ~~~ lua
 
 --填充100个相同大小的图片。
-    local view =  cc.ui.UIScrollView.new({viewRect=CCRect(0,0,display.width,display.height),direction=2});
-    self:addChild(view);
-    local t = {};
+    local view =  cc.ui.UIScrollView.new({viewRect=cc.rect(0,0,display.width,display.height),direction=2})
+    self:addChild(view)
+    local t = {}
     for i = 1, 100 do
-      local png  = cc.ui.UIImage.new("box_bai.png");
-      t[#t+1] = png;
-      cc.ui.UILabel.new({text = i, size = 24, color = ccc3(100,100,100)})
-      :align(display.CENTER, png:getContentSize().width/, png:getContentSize().height/2):addTo(png);
+      local png  = cc.ui.UIImage.new("box_bai.png")
+      t[#t+1] = png
+      cc.ui.UILabel.new({text = i, size = 24, color = cc.c3b(100,100,100)})
+      :align(display.CENTER, png:getContentSize().width/2, png:getContentSize().height/2):addTo(png)
     end
 --填充scrollview，参数itemSize为填充项的大小(填充项大小必须相同)
-    view:fill(t,{itemSize=cc.size(SIZE(t[#t]))});
+    view:fill(t,{itemSize=cc.size((t[#t]):getContentSize())})
 
 ~~~
 
-注意：nodes 是table结构，且一定要是{node1,node2,node3,...}不能是{a=node1,b=node2,c=node3,...}
+注意：参数nodes 是table结构，且一定要是{node1,node2,node3,...}不能是{a=node1,b=node2,c=node3,...}
 
 @param nodes node集
-@param params 参见fill函数头定义。
+@param params 参见fill函数头定义。  -- params = extend({ ...
 
 ]]
 
 function UIScrollView:fill(nodes,params)
-  --多参数的继承用法,把param2的参数增加覆盖到param1中。
+  --参数的继承用法,把param2的参数增加覆盖到param1中。
   local extend = function(param1,param2)
     if not param2 then
-      return param1;
+      return param1
     end
     for k , v in pairs(param2) do
-      param1[k] = param2[k];
+      param1[k] = param2[k]
     end
-    return param1;
+    return param1
   end
 
   local params = extend({
@@ -793,93 +854,98 @@ function UIScrollView:fill(nodes,params)
     --列数目
     cellCount = 3,
     --填充项大小
-    itemSize = CCSize(50,50)
-  },params);
+    itemSize = cc.size(50 , 50)
+  },params)
 
   if #nodes == 0 then
-    return nil;
+    return nil
   end
 
   --基本坐标工具方法
-  local SIZE = function(node) return node:getContentSize(); end
-  local W = function(node) return node:getContentSize().width; end
-  local H = function(node) return node:getContentSize().height; end
-  local S_SIZE = function(node,w,h) return node:setContentSize(CCSize(w,h)); end
-  local S_XY = function(node,x,y) node:setPosition(x,y); end
-  local AX = function(node) return node:getAnchorPoint().x; end
-  local AY = function(node) return node:getAnchorPoint().y; end
-  --三元运算符
-  local CALC_3 = function(exp, result1, result2) if(exp==true)then return result1; else return result2; end end
+  local SIZE = function(node) return node:getContentSize() end
+  local W = function(node) return node:getContentSize().width end
+  local H = function(node) return node:getContentSize().height end
+  local S_SIZE = function(node , w , h) return node:setContentSize(cc.size(w , h)) end
+  local S_XY = function(node , x , y) node:setPosition(x,y) end
+  local AX = function(node) return node:getAnchorPoint().x end
+  local AY = function(node) return node:getAnchorPoint().y end
 
   --创建一个容器node
-  local innerContainer = display.newNode();
+  local innerContainer = display.newNode()
   --初始容器大小为视图大小
-  S_SIZE(innerContainer,self:getViewRect().width,self:getViewRect().height);
-  self:addScrollNode(innerContainer);
-  --  innerContainer:addTo(self:getScrollNode());
-  
+  S_SIZE(innerContainer , self:getViewRect().width , self:getViewRect().height)
+  self:addScrollNode(innerContainer)
+  S_XY(innerContainer , self.viewRect_.x , self.viewRect_.y)
+
   --如果是纵向布局
   if self.direction == cc.ui.UIScrollView.DIRECTION_VERTICAL then
 
     --自动布局
     if params.autoTable then
-      params.cellCount = math.floor(W(self)/params.itemSize.width);
+      params.cellCount = math.floor(W(self) / params.itemSize.width)
     end
 
     --自动间隔
     if params.autoGap then
-      params.widthGap = (W(self)-(params.cellCount*params.itemSize.width))/(params.cellCount+1);
-      params.heightGap = params.widthGap;
+      params.widthGap = (W(self) - (params.cellCount * params.itemSize.width)) / (params.cellCount + 1)
+      params.heightGap = params.widthGap
     end
 
     --填充量
-    params.rowCount = CALC_3(#nodes%params.cellCount==0,math.floor(#nodes/params.cellCount),math.floor(#nodes/params.cellCount)+1);
-    S_SIZE(innerContainer,W(self),(params.itemSize.height+params.heightGap)*params.rowCount+params.heightGap);
+    params.rowCount = math.ceil(#nodes / params.cellCount)
+    S_SIZE(innerContainer , W(self) , (params.itemSize.height + params.heightGap) * params.rowCount + params.heightGap)
 
-    for i = 1 ,#(nodes) do
+    for i = 1 , #nodes do
 
-      local n = nodes[i];
-      local x = 0.0;
-      local y = 0.0;
+      local n = nodes[i]
+      local x = 0.0
+      local y = 0.0
 
-      x = params.widthGap + math.floor((i-1) % params.cellCount) * (params.widthGap+params.itemSize.width);
-      y = H(innerContainer)-(math.floor((i-1)/params.cellCount)+1)*(params.heightGap+params.itemSize.height);
-      x = x + W(n) * AX(n);
-      y = y + H(n) * AY(n);
+      --不管描点如何，总是有标准居中方式设置坐标。
+      x = params.widthGap + math.floor((i - 1) % params.cellCount) * (params.widthGap + params.itemSize.width)
+      y = H(innerContainer) - (math.floor((i - 1) / params.cellCount) + 1) * (params.heightGap + params.itemSize.height)
+      x = x + W(n) * AX(n)
+      y = y + H(n) * AY(n)
 
-      S_XY(n,x,y);
-      n:addTo(innerContainer);
+      S_XY(n , x ,y)
+      n:addTo(innerContainer)
 
     end
+
+    local x, y = innerContainer:getPosition()
+	local size = innerContainer:getContentSize()
+	local disY = self.viewRect_.height - size.height
+	y = y + disY
+	S_XY(innerContainer, x, y)
     --如果是横向布局
     --  elseif(self.direction==cc.ui.UIScrollView.DIRECTION_HORIZONTAL) then
   else
-    if(params.autoTable)then
-      params.rowCount = math.floor(H(self)/params.itemSize.height);
+    if params.autoTable then
+      params.rowCount = math.floor(H(self) / params.itemSize.height)
     end
 
-    if(params.autoGap)then
-      params.heightGap = (H(self)-(params.rowCount*params.itemSize.height))/(params.rowCount+1);
-      params.widthGap = params.heightGap;
+    if params.autoGap then
+      params.heightGap = (H(self) - (params.rowCount * params.itemSize.height)) / (params.rowCount + 1)
+      params.widthGap = params.heightGap
     end
 
-    params.cellCount = CALC_3(#nodes%params.rowCount==0,math.floor(#nodes/params.rowCount),math.floor(#nodes/params.rowCount)+1);
-    S_SIZE(innerContainer,(params.itemSize.width+params.widthGap)*params.cellCount+params.widthGap,H(self));
+    params.cellCount = math.ceil(#nodes / params.rowCount)
+    S_SIZE(innerContainer ,(params.itemSize.width + params.widthGap) * params.cellCount + params.widthGap ,H(self))
 
-    for i = 1, #(nodes) do
+    for i = 1, #nodes do
 
-      local n = nodes[i];
-      local x = 0.0;
-      local y = 0.0;
+      local n = nodes[i]
+      local x = 0.0
+      local y = 0.0
 
       --不管描点如何，总是有标准居中方式设置坐标。
-      x = params.widthGap +  math.floor((i-1) / params.rowCount) * (params.widthGap+params.itemSize.width);
-      y = H(innerContainer)-(math.floor((i-1) % params.rowCount) +1)*(params.heightGap+params.itemSize.height);
-      x = x + W(n) * AX(n);
-      y = y + H(n) * AY(n);
+      x = params.widthGap +  math.floor((i - 1) / params.rowCount ) * (params.widthGap + params.itemSize.width)
+      y = H(innerContainer) - (math.floor((i - 1) % params.rowCount ) +1 ) * (params.heightGap + params.itemSize.height)
+      x = x + W(n) * AX(n)
+      y = y + H(n) * AY(n)
 
-      S_XY(n,x,y);
-      n:addTo(innerContainer);
+      S_XY(n , x , y)
+      n:addTo(innerContainer)
 
     end
 

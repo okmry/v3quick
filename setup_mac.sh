@@ -6,12 +6,12 @@ if [ "$BASENAME" = "Resources" ]; then
     DIR=`dirname "$DIR"`
     DIR=`dirname "$DIR"`
     DIR=`dirname "$DIR"`
-    CALL_BY_CONTAINER=APP
+    export CALL_BY_CONTAINER=APP
 fi
 
 if [ ! "$2" == "" ]; then
     DIR=$2
-    CALL_BY_CONTAINER=PKG
+    export CALL_BY_CONTAINER=PKG
 fi;
 
 VERSION=`cat $DIR/VERSION`
@@ -85,7 +85,6 @@ if [ "$CALL_BY_CONTAINER" == "PKG" ]; then
 fi
 
 export QUICK_V3_ROOT=`cat ~/.QUICK_V3_ROOT`
-export CALL_BY_CONTAINER=$CALL_BY_CONTAINER
 
 if [ "$CALL_BY_CONTAINER" == "APP" ]; then
 
@@ -125,6 +124,6 @@ elif [ "$CALL_BY_CONTAINER" == "PKG" ]; then
     echo "done." >> "$LOG_FILENAME"
     echo "" >> "$LOG_FILENAME"
 
-    open -g -e "$LOG_FILENAME"
-    open -g -R "$QUICK_V3_ROOT/player3.app"
+    open -g "$QUICK_V3_ROOT/README.html"
+    open -R "$QUICK_V3_ROOT/player3.app"
 fi

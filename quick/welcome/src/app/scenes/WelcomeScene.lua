@@ -37,7 +37,6 @@ function WelcomeScene:createLogo(node)
         color = display.COLOR_WHITE,
         x = 138,
         y = display.top - 55,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
     label:align(display.LEFT_CENTER)
     node:addChild(label)
@@ -50,7 +49,6 @@ function WelcomeScene:createLogo(node)
         color = cc.c3b(243,156,18),
         x = 140 + label:getContentSize().width,
         y = display.top - 36,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
     label:align(display.LEFT_CENTER)
     node:addChild(label)
@@ -163,19 +161,17 @@ function WelcomeScene:createListItem(icon, title, path)
     local titleLabel = cc.ui.UILabel.new({
             text = title[#title],
             size = 26,
-            align = cc.ui.TEXT_ALIGN_LEFT,
             color = display.COLOR_WHITE})
-    titleLabel:pos(80, 50)
+    titleLabel:align(display.LEFT_CENTER, 80, 50)
     titleLabel:addTo(container)
 
     -- path
     cc.ui.UILabel.new({
         text = stripPath(path, 80),
         size = 12,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         color = display.COLOR_WHITE,
         })
-    :pos(80,15)
+    :align(display.LEFT_CENTER, 80,15)
     :addTo(container)
 
     display.newLine(
@@ -311,7 +307,6 @@ function WelcomeScene:createCopyright(node)
         color = cc.c3b(128, 128, 128),
         x = 48,
         y = display.bottom + 24,
-        align = cc.ui.TEXT_ALIGN_LEFT,
     })
     label:align(display.LEFT_CENTER)
     node:addChild(label)
@@ -323,7 +318,6 @@ function WelcomeScene:createCopyright(node)
         color = cc.c3b(128, 128, 128),
         x = display.width - 38,
         y = display.bottom + 24,
-        align = cc.ui.TEXT_ALIGN_CENTER,
         })
     label:setAnchorPoint(1, 0.5)
     node:addChild(label)
@@ -359,7 +353,6 @@ function WelcomeScene:createTitleBar(node)
 
     cc.ui.UILabel.new({
         text = stripPath("<user>", 9),
-        align = cc.ui.TEXT_ALIGN_LEFT,
         color = cc.c3b(255,255,255,255),
         size = 18,
     })

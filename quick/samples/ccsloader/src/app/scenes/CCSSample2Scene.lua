@@ -11,7 +11,8 @@ function CCSSample2Scene:ctor()
 	app:loadCCSJsonFile(self, "DemoLogin.ExportJson")
 
 	-- register function on node
-	local loginNode = cc.uiloader:seekNodeByTag(self, 14)
+	-- path为传入除要结点node名字外的路径
+	local loginNode = cc.uiloader:seekNodeByPath(self, "Panel/login_Button")
 	loginNode:onButtonClicked(function(event)
 		print("CCSSample2Scene login button clicked")
 		-- dump(event, "login button:")

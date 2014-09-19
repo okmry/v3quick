@@ -30,6 +30,9 @@ class ApkBuilder
 
     private $ndk_root;
 
+    private $apkFilename;
+    private $unsignFilename;
+
     function __construct($config)
     {
         $this->config = $config;
@@ -119,6 +122,57 @@ class ApkBuilder
         return $retdir;
     }
 
+    function setKeystore()
+    {
+        $proj_dir = $this->config['project_dir'];
+        $json_file = $proj_dir . '/../config.json';
+        $json = json_decode(file_get_contents($json_file), true);
+        $projectName = $json['init_cfg']['name'];
+        date_default_timezone_set("Asia/Chongqing");
+        $datestr = date('Ymd-His');
+        $this->apkFilename = sprintf("%s-%s.apk", $projectName, $datestr);
+        $this->unsignFilename = sprintf("%s-%s-unsigned.apk", $projectName, $datestr);
+
+        if ($this->config['nosign'])
+        {
+            return true;
+        }
+
+        if ($this->config['keystore'])
+        {
+            $this->keystore_file = $this->config['keystore'];
+        }
+        else
+        {
+            $this->keystore_file = $this->quick_root . '/quick/bin/android/quickv3.keystore';
+        }
+        if (!file_exists($this->keystore_file))
+        {
+            print("\nError: $this->keystore_file not found!\n\n");
+            return(false);
+        }
+
+        if ($this->config['storepass'])
+        {
+            $this->keystore_password = $this->config['storepass'];
+        }
+        else
+        {
+            $this->keystore_password = '123456';
+        }
+
+        if ($this->config['storealias'])
+        {
+            $this->keystore_alias = $this->config['storealias'];
+        }
+        else
+        {
+            $this->keystore_alias = 'quickv3.keystore';
+        }
+
+        return true;
+    }
+
     function checkToolsRootPath()
     {
         $this->quick_root = $_ENV["QUICK_V3_ROOT"];
@@ -151,34 +205,9 @@ class ApkBuilder
             $this->class_path = $this->class_path . $this->split_char . $this->config['classpath'];
         }
 
-        if ($this->config['keystore'])
+        if (!$this->setKeystore())
         {
-            $this->keystore_file = $this->config['keystore'];
-        }
-        else
-        {
-            $this->keystore_file = $this->quick_root . '/quick/bin/android/quickv3.keystore';
-        }
-        if (!file_exists($this->keystore_file))
-        {
-            print("\nError: $this->keystore_file not found!\n\n");
             return(false);
-        }
-        if ($this->config['storepass'])
-        {
-            $this->keystore_password = $this->config['storepass'];
-        }
-        else
-        {
-            $this->keystore_password = '123456';
-        }
-        if ($this->config['storealias'])
-        {
-            $this->keystore_alias = $this->config['storealias'];
-        }
-        else
-        {
-            $this->keystore_alias = 'quickv3.keystore';
         }
 
         $this->build_tools_path = $this->sdk_root . '/build-tools';
@@ -290,7 +319,8 @@ class ApkBuilder
     {
         $cmd_str = 'java -classpath ' . $this->sdk_root . '/tools/lib/sdklib.jar'
             . ' com.android.sdklib.build.ApkBuilderMain'
-            . ' bin/unsigner.apk -u -z bin/resources.ap_ -f bin/classes.dex -rf src -nf libs -rj libs';
+            . ' ' . $this->unsignFilename
+            . ' -u -z bin/resources.ap_ -f bin/classes.dex -rf src -nf libs -rj libs';
 
         $retval = $this->exec_sys_cmd($cmd_str);
 
@@ -299,9 +329,15 @@ class ApkBuilder
 
     function sign_apk()
     {
+        if ($this->config['nosign'])
+        {
+            return 0;
+        }
+
         $cmd_str = 'jarsigner -keystore ' . $this->keystore_file
             . ' -storepass ' . $this->keystore_password
-            . ' -signedjar bin/quickgame.apk bin/unsigner.apk '
+            . ' -signedjar ' . $this->apkFilename
+            . ' ' . $this->unsignFilename . ' '
             . $this->keystore_alias;
 
         $retval = $this->exec_sys_cmd($cmd_str);

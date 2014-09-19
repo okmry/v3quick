@@ -48,9 +48,9 @@ THE SOFTWARE.
 local p = cc.PACKAGE_NAME .. ".cocos2dx."
 
 require(p .. "Cocos2dConstants")
-require (p .. "OpenglConstants")
-require (p .. "Cocos2d")
-require (p .. "StudioConstants")
+require(p .. "OpenglConstants")
+require(p .. "Cocos2d")
+require(p .. "StudioConstants")
 
 require(p .. "Event")
 require(p .. "NodeEx")

@@ -2,8 +2,14 @@
 local CCSUILoader = import(".CCSUILoader")
 local CCSSceneLoader = class("CCSSceneLoader")
 
-function CCSSceneLoader:load(json)
-	return self:createGameObject(json), json.CanvasSize._width, json.CanvasSize._height
+function CCSSceneLoader:load(json, params)
+	self.params_ = params
+
+	local node = self:createGameObject(json), json.CanvasSize._width, json.CanvasSize._height
+
+	self.params_ = nil
+
+	return node
 end
 
 function CCSSceneLoader:createGameObject(jsonNode)
@@ -103,7 +109,7 @@ function CCSSceneLoader:createArmature(comp)
 end
 
 function CCSSceneLoader:createGUIComponent(comp)
-	local ui = CCSUILoader:loadFile(comp.fileData.path)
+	local ui = CCSUILoader:loadFile(comp.fileData.path, self.params_)
 
 	return ui
 end

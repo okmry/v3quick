@@ -3,7 +3,7 @@ local Store = {}
 
 local function checkCCStore()
     if not CCStore then
-        printError("framework.api.Store - CCStore not exists.")
+        printError("framework.cc.sdk.Store - CCStore not exists.")
         return false
     end
     return true

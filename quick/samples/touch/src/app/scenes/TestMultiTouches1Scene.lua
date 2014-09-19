@@ -31,8 +31,7 @@ function TestMultiTouches1Scene:ctor()
     -- 添加触摸事件处理函数
     self.sprite:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         -- event.name 是触摸事件的状态：began, moved, ended, cancelled, added（仅限多点触摸）, removed（仅限多点触摸）
-        -- event.x, event.y 是触摸点当前位置
-        -- event.prevX, event.prevY 是触摸点之前的位置
+        -- event.points 包含所有触摸点，按照 events.point[id] = {x = ?, y = ?} 的结构组织
         local str = {}
         for id, point in pairs(event.points) do
             str[#str + 1] = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)

@@ -1,53 +1,74 @@
-# CCSLoader介绍与使用
+Title: CCSLoader 用法说明
 
+CCSLoader 用法说明
+================
 
-### CCSLoader是什么
+CCSLoader 是 quick 中的一个功能库。
 
-ccsloader是quick在V3版本上提供的一个解析ccs studio的UI布局,场景导出json文件的工具
+CCSLoader 读取 Cocos Studio 输出的场景和 UI 布局 JSON 文件，并用 quick 自带的 Lua UI 控件渲染出来。
 
-它会解析json文件,并用quick中自带的纯lua控件(cc.ui中的控件)来展示对应的布局或场景
+相比使用 Cocos Studio C++ UI 控件来渲染，使用 quick 自带的 Lua UI 控件有以下好处：
 
+-   由于只使用了标准的 Node 和 Sprite 等对象，渲染效率更高
+-   支持 quick 的三阶段触摸事件机制
+-   Lua UI 控件更容易理解和扩展
 
-### quick-V2.X上是否支持CCSLoader
+~
 
-ccsloader是在首先在V3上编写,在quick-V2.2.5发布后才移植到V2上的,quick-V2.2.5后的版本都具有CCSLoader功能
+## 基本用法
 
+解析 JSON 文件并显示：
 
-### CCSLoader的用法
+~~~lua
 
+local node = cc.uiloader:load("test.ExportJson")
 
-json文件的解析与显示
-
-```lua
---传入要解析的json文件
-local node = cc.uiloader:load("/res/test.ExportJson")
---解析成功后，会返回UI树的根结点，把它加到场景中
+-- 解析成功后，会返回场景/UI的根节点，将其加入场景即可显示
 if node then
     node:setPosition(0, 0)
     scene:addChild(node)
 end
-```
 
-从解析后的UI布局按名字查找结点
+~~~
 
-``` lua
---布局中有一个名字为"DragPanel"滚动控件
+~
+
+按名字查找节点：
+
+~~~lua
+
+local node = cc.uiloader:load("test.ExportJson")
+
+-- 假设布局中有一个名字为 "DragPanel" 的滚动控件
+-- seekNodeByName() 从成功加载的根节点中查找指定名字的节点
 local scrollView = cc.uiloader:seekNodeByName(node, "DragPanel")
---在scrollView上注册滚动回调事件,它的用法,API接口在cc.ui.UIScrollView
+
+-- 滚动控件在 Lua UI 中的类型是 cc.ui.UIScrollView
+-- 在 scrollView 上注册滚动回调事件
 scrollView:onScroll(function(event)
-		print("CCSSample3Scene scroll")
-	end)
-```
+    print("CCSSample3Scene scroll")
+end)
 
-从解析后的场景按名字顺序查找组件
+~~~
 
-``` lua
--- "hero" 是结点名称
--- 1 是 "hero"这个结点下的第一个组件
+~
+
+按名字顺序查找节点：
+
+~~~lua
+
+local node = cc.uiloader:load("test.ExportJson")
+
+-- seekComponents() 可以查找同名节点中指定次序的节点
+-- 查找所有名为 "hero" 的节点，并返回第 1 个
 local hero = cc.uiloader:seekComponents(node, "hero", 1)
---hero是一个Armature,找到后，播放攻击动作
+
+-- 假设 hero 是一个 Armature 对象，可以用 play 方法播放指定的动作
 hero:getAnimation():play("attack")
-```
 
+~~~
 
-更多用法参见样例samples/ccsloader
+~
+
+更多用法参见样例 samples/ccsloader。
+

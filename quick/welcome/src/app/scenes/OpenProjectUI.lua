@@ -77,9 +77,8 @@ function OpenProjectUI:onEnter()
         text = "Screen Direction:",
         size = fontSize,
         color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
-    :pos(40, display.top - 300)
+    :align(display.LEFT_CENTER, 40, display.top - 300)
     :addTo(self)
 
     self.portaitCheckBox = 
@@ -108,7 +107,6 @@ function OpenProjectUI:onEnter()
         text = "Options:",
         size = fontSize,
         color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
     :pos(40, display.top - 400)
     :addTo(self)
@@ -213,7 +211,6 @@ function OpenProjectUI:createLabelAndEditLineAndButton(holder, labelString, edit
         text = labelString,
         size = fontSize,
         color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
     :pos(40, display.top - 55)
     :addTo(node)

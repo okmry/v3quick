@@ -19,7 +19,7 @@ local Timer = {}
 ]]
 function Timer.new()
     local timer = {}
-    require(cc.PACKAGE_NAME .. ".api.EventProtocol").extend(timer)
+    cc(timer):addComponent("components.behavior.EventProtocol"):exportMethods()
 
     ----
 
@@ -63,7 +63,7 @@ function Timer.new()
 
     因此在事件处理函数中，可以通过事件参数判断倒计时是否已经结束：
 
-        local Timer = require("framework.api.Timer")
+        local Timer = require("framework.cc.utils.Timer")
         local appTimer = Timer.new()
 
         -- 响应 CITYHALL_UPGRADE_TIMER 事件
@@ -131,7 +131,7 @@ function Timer.new()
     function timer:removeCountdown(eventName)
         eventName = tostring(eventName)
         countdowns[eventName] = nil
-        self:removeAllEventListenersForEvent(eventName)
+        self:removeEventListenersByEvent(eventName)
     end
 
     --[[--

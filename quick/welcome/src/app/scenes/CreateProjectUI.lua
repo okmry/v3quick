@@ -39,10 +39,9 @@ function CreateProjectUI:onEnter()
         UILabelType = 2,
         text = "Choose Project Location:",
         size = fontSize,
-        color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
+        color = display.COLOR_WHITE
         })
-    :pos(40, display.top - 55)
+    :align(display.LEFT_CENTER, 40, display.top - 55)
     :addTo(self)
 
     local t = {
@@ -82,9 +81,8 @@ function CreateProjectUI:onEnter()
         text = "Project package name: (etc: com.mycomp.games.mygame)",
         size = fontSize,
         color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
-    :pos(40, display.top - 155)
+    :align(display.LEFT_CENTER, 40, display.top - 155)
     :addTo(self)
 
     local packageEditbox = EditBoxLite.create({
@@ -103,9 +101,8 @@ function CreateProjectUI:onEnter()
         text = "Screen Direction:",
         size = fontSize,
         color = display.COLOR_WHITE,
-        align = cc.ui.TEXT_ALIGN_LEFT,
         })
-    :pos(40, display.top - 255)
+    :align(display.LEFT_CENTER, 40, display.top - 255)
     :addTo(self)
 
     local portaitCheckBox = 

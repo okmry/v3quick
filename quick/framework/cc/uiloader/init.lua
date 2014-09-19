@@ -31,6 +31,7 @@ cc.uiloader 可以将CCS导出的json文件用quick的纯lua控件构建出UI布
 
 ]]
 
+local UILoaderUtilitys = import(".UILoaderUtilitys")
 local uiloader = class("uiloader")
 local CCSUILoader = import(".CCSUILoader")
 local CCSSceneLoader = import(".CCSSceneLoader")
@@ -142,6 +143,20 @@ function uiloader:seekNodeByName(parent, name)
 		end
 
 		if parent then
+			if name == parent.name then
+				return parent
+			end
+		end
+	end
+
+	for i=1, childCount do
+		if "table" == type(children) then
+			parent = children[i]
+		elseif "userdata" == type(children) then
+			parent = children:objectAtIndex(i - 1)
+		end
+
+		if parent then
 			findNode = self:seekNodeByName(parent, name)
 			if findNode then
 				return findNode
@@ -150,6 +165,33 @@ function uiloader:seekNodeByName(parent, name)
 	end
 
 	return
+end
+
+--[[--
+
+按name查找布局中的结点
+
+@param node parent 要查找布局的结点
+@param string path 要查找的path
+
+@return node
+
+]]
+function uiloader:seekNodeByPath(parent, path)
+	if not parent then
+		return
+	end
+
+	local names = string.split(path, '/')
+
+	for i,v in ipairs(names) do
+		parent = self:seekNodeByName(parent, v)
+		if not parent then
+			return
+		end
+	end
+
+	return parent
 end
 
 --[[--
@@ -189,6 +231,10 @@ end
 function uiloader:loadFile_(jsonFile)
 	local fileUtil = cc.FileUtils:getInstance()
 	local fullPath = fileUtil:fullPathForFilename(jsonFile)
+
+	local pathinfo  = io.pathinfo(fullPath)
+	UILoaderUtilitys.addSearchPathIf(pathinfo.dirname)
+
 	local jsonStr = fileUtil:getStringFromFile(fullPath)
 	local jsonVal = json.decode(jsonStr)
 

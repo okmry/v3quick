@@ -5,12 +5,14 @@ DIR="`dirname $DIR`"
 DIR="`dirname $DIR`"
 
 QUICK_V3_ROOT=$DIR
+VERSION=`cat $QUICK_V3_ROOT/VERSION`
+WORKDIR=$QUICK_V3_ROOT/dist_workdir/quick-$VERSION/
 
 echo ""
 echo "QUICK_V3_ROOT = \"$QUICK_V3_ROOT\""
+echo "VERSION = \"$VERSION\""
+echo "WORKDIR = \"$WORKDIR\""
 echo ""
-
-WORKDIR=$QUICK_V3_ROOT/dist_workdir/dist/
 
 if [ -d "$WORKDIR" ]; then
     rm -fr "$WORKDIR"

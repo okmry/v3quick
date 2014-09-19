@@ -225,7 +225,7 @@ end
 
 相比 ui.newTTFLabel() 增加一个参数：
 
--   shadowColor: 阴影颜色（可选），用 cc.c3b() 指定，默认为黑色
+-   shadowColor: 阴影颜色（可选），用 cc.c4b() 指定，默认为黑色
 
 @param table params 参数表格对象
 
@@ -235,7 +235,10 @@ end
 function ui.newTTFLabelWithShadow(params)
     PRINT_DEPRECATED(string.format("%s() is deprecated, please use %s()", "ui.newTTFLabelWithShadow", "cc.ui.UILabel"))
 
-    return cc.ui.UILabel.newTTFLabelWithShadow_(params)
+    local label = cc.ui.UILabel.newTTFLabel_(params)
+    label:enableShadow(params.shadowColor, cc.size(2,-2))
+
+    return label
 end
 
 --[[--
@@ -244,7 +247,7 @@ end
 
 相比 ui.newTTFLabel() 增加一个参数：
 
-    outlineColor: 描边颜色（可选），用 cc.c3b() 指定，默认为黑色
+    outlineColor: 描边颜色（可选），用 cc.c4b() 指定，默认为黑色
 
 @param table params 参数表格对象
 
@@ -254,7 +257,10 @@ end
 function ui.newTTFLabelWithOutline(params)
     PRINT_DEPRECATED(string.format("%s() is deprecated, please use %s()", "ui.newTTFLabelWithOutline", "cc.ui.UILabel"))
     
-    return cc.ui.UILabel.newTTFLabelWithOutline_(params)
+    local label = cc.ui.UILabel.newTTFLabel_(params)
+    label:enableOutline(params.outlineColor, 2);
+
+    return label
 end
 
 return ui

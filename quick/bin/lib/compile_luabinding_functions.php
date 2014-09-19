@@ -90,8 +90,8 @@ EOT;
     // fix push ccobject
     $find = 'toluafix_pushusertype_ccobject(tolua_S,(void*)tolua_ret';
     $replace = <<<EOT
-int nID = (tolua_ret) ? tolua_ret->m_uID : -1;
-int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+int nID = (tolua_ret) ? tolua_ret->_ID : -1;
+int* pLuaID = (tolua_ret) ? &tolua_ret->_luaID : NULL;
 toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret
 EOT;
     $rules[$find] = $replace;

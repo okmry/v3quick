@@ -243,7 +243,7 @@ function transition.moveTo(target, args)
     return transition.execute(target, action, args)
 end
 
---[[
+--[[--
 
 将显示对象移动一定距离，并返回 Action 动作对象。
 
@@ -272,7 +272,7 @@ function transition.moveBy(target, args)
     return transition.execute(target, action, args)
 end
 
---[[
+--[[--
 
 淡入显示对象，并返回 Action 动作对象。
 
@@ -298,7 +298,7 @@ function transition.fadeIn(target, args)
     return transition.execute(target, action, args)
 end
 
---[[
+--[[--
 
 淡出显示对象，并返回 Action 动作对象。
 
@@ -501,7 +501,7 @@ function transition.playAnimationOnce(target, animation, removeWhenFinished, onC
     return action
 end
 
---[[
+--[[--
 
 在显示对象上循环播放动画，并返回 Action 动作对象。
 
@@ -538,7 +538,7 @@ function transition.playAnimationForever(target, animation, delay)
     return action
 end
 
---[[
+--[[--
 
 停止一个正在执行的动作
 
@@ -560,7 +560,7 @@ function transition.removeAction(action)
     end
 end
 
---[[
+--[[--
 
 停止一个显示对象上所有正在执行的动作
 
@@ -585,7 +585,7 @@ function transition.stopTarget(target)
     end
 end
 
---[[
+--[[--
 
 暂停显示对象上所有正在执行的动作
 
@@ -598,7 +598,7 @@ function transition.pauseTarget(target)
     end
 end
 
---[[
+--[[--
 
 恢复显示对象上所有暂停的动作
 

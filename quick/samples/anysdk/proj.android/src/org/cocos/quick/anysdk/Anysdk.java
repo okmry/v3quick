@@ -25,17 +25,20 @@ package org.cocos.quick.anysdk;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.utils.PSNative;
+import org.cocos2dx.utils.PSNetwork;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.anysdk.framework.PluginWrapper;
-
 public class Anysdk extends Cocos2dxActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PSNative.init(this);
+        PSNetwork.init(this);
         PluginWrapper.init(this);
     }
 
