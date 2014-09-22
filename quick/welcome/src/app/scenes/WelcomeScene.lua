@@ -94,7 +94,7 @@ function WelcomeScene:createButtons(node)
     :setButtonSize(buttonWidth, buttonHeight)
     :setButtonLabel("normal", cc.ui.UILabel.new({
 		    UILabelType = 2,
-            text = "删除",
+            text = "移除",
             size = 18,
         }))
     :pos(display.width-padding, top)

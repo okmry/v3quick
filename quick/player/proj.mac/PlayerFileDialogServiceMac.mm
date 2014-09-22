@@ -1,6 +1,14 @@
 
 #include "PlayerFileDialogServiceMac.h"
 
+#include "glfw3.h"
+#include "glfw3native.h"
+
+#define VALIDATE_FRAMEBUFFER { \
+NSOpenGLContext *__context = glfwGetNSGLContext(glfwGetCurrentContext()); \
+[__context makeCurrentContext]; \
+}
+
 PLAYER_NS_BEGIN
 
 std::string PlayerFileDialogServiceMac::openFile(const std::string &title,
@@ -29,7 +37,6 @@ std::string PlayerFileDialogServiceMac::openFile(const std::string &title,
         
         for (NSString *oneExtension in extensionArray) {
             NSArray *tmpData = [oneExtension componentsSeparatedByString:@"|"];
-//            NSString *info = [tmpData objectAtIndex:0];
             if ([tmpData count] > 1)
             {
                 NSString *suffixString = [tmpData objectAtIndex:1];
@@ -37,7 +44,7 @@ std::string PlayerFileDialogServiceMac::openFile(const std::string &title,
                 [fileTypes addObjectsFromArray:[suffixString componentsSeparatedByString:@","]];
             }
         }
-
+        
         [openDlg setAllowedFileTypes:fileTypes];
     }
     
@@ -47,11 +54,14 @@ std::string PlayerFileDialogServiceMac::openFile(const std::string &title,
         NSURL *url = [openDlg.URLs objectAtIndex:0];
         filePath = [[url path] UTF8String];
     }
+    
+    [openDlg close];
+    VALIDATE_FRAMEBUFFER
     return filePath;
 }
 
 std::string PlayerFileDialogServiceMac::openDirectory( const std::string &title,
-                                                       const std::string &directory) const
+                                                      const std::string &directory) const
 {
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setTitle:[NSString stringWithUTF8String:title.c_str()]];
@@ -72,15 +82,16 @@ std::string PlayerFileDialogServiceMac::openDirectory( const std::string &title,
         NSURL *url = [openDlg.URLs objectAtIndex:0];
         path = [[url path] UTF8String];
     }
+    
+    [openDlg close];
+    VALIDATE_FRAMEBUFFER
     return path;
 }
 
 std::vector<std::string> PlayerFileDialogServiceMac::openMultiple(  const std::string &title,
-                                                                    const std::string &directory,
-                                                                    const std::string &extensions) const
+                                                                  const std::string &directory,
+                                                                  const std::string &extensions) const
 {
-
-    
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setTitle:[NSString stringWithUTF8String:title.c_str()]];
     [openDlg setCanChooseDirectories:YES];
@@ -122,6 +133,8 @@ std::vector<std::string> PlayerFileDialogServiceMac::openMultiple(  const std::s
         }
     }
     
+    [openDlg close];
+    VALIDATE_FRAMEBUFFER
     return  pathes;
 }
 
@@ -152,6 +165,9 @@ std::string PlayerFileDialogServiceMac::saveFile(const std::string &title,
         NSURL *url = saveDlg.URL;
         filePath = [[url path] UTF8String];
     }
+
+    [saveDlg close];
+    VALIDATE_FRAMEBUFFER
     return filePath;
 }
 
