@@ -304,6 +304,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		F457E79119D19824004128D3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "echo PWD: $PWD\n\nif [ -d \"$PWD/../res/\" ]; then\necho COPY framework_precompiled.zip FROM $QUICK_V3_ROOT/quick/lib/framework_precompiled/ to $PWD/../res/\ncp $QUICK_V3_ROOT/quick/lib/framework_precompiled/framework_precompiled.zip $PWD/../res/\nfi\n\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F456ECBD15EE018E00FCF3E2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;

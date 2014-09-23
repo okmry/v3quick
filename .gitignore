@@ -2,6 +2,7 @@
 .*
 *.o
 dist_workdir/
+quick/lib/framework_precompiled/*.zip
 
 # Ignore thumbnails created by windows
 Thumbs.db
@@ -41,11 +42,11 @@ ipch/
 *.opensdf
 
 # Ignore files build by ndk and eclipse
-libs/
+proj.android/libs/
 proj.android/bin/
-obj/
-gen/
-assets/
+proj.android/obj/
+proj.android/gen/
+proj.android/assets/
 local.properties
 
 # Ignore files build by xcode
@@ -66,7 +67,6 @@ build.xcarchive/
 project.properties
 
 #
-quick/player/win_bin_*
 player3.app
 player3.exe
 

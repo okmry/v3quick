@@ -586,6 +586,7 @@
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_manual.hpp" />
     <ClInclude Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.hpp" />
     <ClInclude Include="..\lua_bindings\manual\Lua_web_socket.h" />
+    <ClInclude Include="..\lua_bindings\manual\snapshot.h" />
     <ClInclude Include="..\lua_bindings\manual\tolua_fix.h" />
     <ClInclude Include="..\lua_bindings\tolua\tolua++.h" />
     <ClInclude Include="..\lua_bindings\tolua\tolua_event.h" />
@@ -979,6 +980,7 @@
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\lua_cocos2dx_physics_manual.cpp" />
     <ClCompile Include="..\lua_bindings\manual\Lua_web_socket.cpp" />
+    <ClCompile Include="..\lua_bindings\manual\snapshot.c" />
     <ClCompile Include="..\lua_bindings\manual\tolua_fix.cpp" />
     <ClCompile Include="..\lua_bindings\tolua\tolua_event.c" />
     <ClCompile Include="..\lua_bindings\tolua\tolua_is.c" />

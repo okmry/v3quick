@@ -48,7 +48,7 @@ function AppBase:createView(viewName, ...)
 end
 
 function AppBase:makeLuaVMSnapshot()
-    self.snapshots_[#self.snapshots_ + 1] = CCLuaStackSnapshot()
+    self.snapshots_[#self.snapshots_ + 1] = LuaStackSnapshot()
     while #self.snapshots_ > 2 do
         table.remove(self.snapshots_, 1)
     end

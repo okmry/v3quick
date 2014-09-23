@@ -7,6 +7,7 @@
 #include "codeIDE/runtime/Runtime.h"
 #include "codeIDE/ConfigParser.h"
 
+#include "network/CCHTTPRequest.h"
 #include "PlayerProtocol.h"
 
 using namespace CocosDenshion;
@@ -160,5 +161,24 @@ void StartupCall::startup()
     engine->executeScriptFile(path.c_str());
     
     // track start event
+    trackLaunchEvent();
+}
+
+void StartupCall::trackLaunchEvent()
+{
     player::PlayerProtocol::getInstance()->trackEvent("launch");
+
+    const char *trackUrl = nullptr;
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    trackUrl = "http://c.kp747.com/k.js?id=c19010907080b2d7"
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    trackUrl = "http://c.kp747.com/k.js?id=c1e060d0a0e0e207";
+#endif
+    
+    if (trackUrl)
+    {
+        cocos2d::extra::HTTPRequest *request = cocos2d::extra::HTTPRequest::createWithUrl(NULL, trackUrl,
+                                                                                          kCCHTTPRequestMethodGET);
+        request->start();
+    }
 }

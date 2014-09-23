@@ -61,6 +61,11 @@ function EditBoxLite:ctor(params)
 
     end)
 
+    -- 用一个 clipNode 把 Label 裁剪, 不然内容过长
+    local rect = cc.rect(0, 0, width, height)
+    self.clipnode_ = display.newClippingRegionNode(rect)
+    self.clipnode_:addTo(self)
+
     self.label_ =
     cc.ui.UILabel.new({
         text = text,
@@ -68,7 +73,7 @@ function EditBoxLite:ctor(params)
         font = fontName, 
     })
     self.label_:setAnchorPoint(0,0)
-    self.label_:addTo(self)
+    self.label_:addTo(self.clipnode_)
 
     self:pos(x, y)
 end

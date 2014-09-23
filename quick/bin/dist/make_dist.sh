@@ -21,7 +21,6 @@ mkdir -p "$WORKDIR"
 
 cd "$QUICK_V3_ROOT"
 git archive v3quick | tar -x -C "$WORKDIR"
-rm "$WORKDIR/player3.exe"
 
 cd quick/player/proj.mac
 

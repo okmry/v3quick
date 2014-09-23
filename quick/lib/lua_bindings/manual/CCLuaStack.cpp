@@ -35,6 +35,7 @@ extern "C" {
 #include "lua_extensions.h"
 #endif
 #include "xxtea/xxtea.h"
+#include "snapshot.h"
 }
 
 #include "Cocos2dxLuaLoader.h"
@@ -160,6 +161,10 @@ bool LuaStack::init(void)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WP8 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     luaopen_lua_extensions(_state);
 #endif
+    
+    // register CCLuaStackSnapshot
+    luaopen_snapshot(_state);
+    
     g_luaType.clear();
     register_all_cocos2dx(_state);
     register_all_cocos2dx_extension(_state);

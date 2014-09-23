@@ -31,12 +31,18 @@ quick 输入控件
 
 local UIInput
 UIInput = class("UIInput", function(options)
+    local inputLabel
+
 	if not options or not options.UIInputType or 1 == options.UIInputType then
-		return UIInput.newEditBox_(options)
+		inputLabel = UIInput.newEditBox_(options)
+        inputLabel.UIInputType = 1
 	elseif 2 == options.UIInputType then
-		return UIInput.newTextField_(options)
+		inputLabel = UIInput.newTextField_(options)
+        inputLabel.UIInputType = 2
 	else
 	end
+
+    return inputLabel
 end)
 
 --[[--
@@ -45,6 +51,9 @@ end)
 
 ]]
 function UIInput:ctor(options)
+    if 2 == options.UIInputType then
+        self.getText = self.getStringValue
+    end
 end
 
 

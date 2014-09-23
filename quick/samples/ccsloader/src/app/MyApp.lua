@@ -69,11 +69,7 @@ function MyApp:loadCCSJsonFile(scene, jsonFile)
     height = height or display.height
     if node then
         node:setPosition((display.width - width)/2, (display.height - height)/2)
-        -- node:setPosition(0, 0)
         scene:addChild(node)
-
-        -- dumpUITree(node)
-        -- drawUIRegion(node, scene, 6)
     end
 end
 

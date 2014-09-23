@@ -43,7 +43,12 @@ echo "- copy scripts"
 cp -rf "$APP_ROOT"/src "$APP_ANDROID_ROOT"/assets/
 echo "- copy resources"
 cp -rf "$APP_ROOT"/res "$APP_ANDROID_ROOT"/assets/
-rm "$APP_ANDROID_ROOT"/assets/res/framework_precompiled_wp8.zip
+
+echo COPY framework_precompiled.zip
+echo FROM: $QUICK_V3_ROOT/quick/lib/framework_precompiled
+echo TO: "$APP_ANDROID_ROOT"/assets/res/
+cp $QUICK_V3_ROOT/quick/lib/framework_precompiled/framework_precompiled.zip "$APP_ANDROID_ROOT"/assets/res/
+echo ""
 
 # build
 echo "Using prebuilt externals"

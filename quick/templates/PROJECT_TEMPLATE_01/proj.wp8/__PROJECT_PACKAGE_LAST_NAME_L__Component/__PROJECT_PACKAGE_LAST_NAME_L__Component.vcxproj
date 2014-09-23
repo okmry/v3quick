@@ -101,6 +101,11 @@
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <AdditionalLibraryDirectories>$(QUICK_V3_ROOT)external\wp8-specific\angle\prebuilt\$(Platform);$(QUICK_V3_ROOT)external\curl\prebuilt\wp8\$(Platform);$(QUICK_V3_ROOT)external\websockets\prebuilt\wp8\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PreBuildEvent>
+      <Command>echo COPY \framework_precompiled_wp8.zip FROM %QUICK_V3_ROOT%quick\lib\framework_precompiled\ TO $(SolutionDir)..\res\
+copy %QUICK_V3_ROOT%quick\lib\framework_precompiled\framework_precompiled_wp8.zip $(SolutionDir)..\res\
+</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

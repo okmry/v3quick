@@ -23,6 +23,13 @@ local data =
     },
 
     {
+        title       = "MVC Test",
+        description = "MVC演示",
+        path        = "samples/mvc",
+        image       = "mvc_ss.png"
+    },
+
+    {
         title       = "sprite 3D",
         description = "3D 精灵演示",
         path        = "samples/sprite3d",

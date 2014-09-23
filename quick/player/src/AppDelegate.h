@@ -59,6 +59,9 @@ public:
     void startup();
     
 private:
+    void trackLaunchEvent();
+    
+private:
     AppDelegate *_app;
 };
 

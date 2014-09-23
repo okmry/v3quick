@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		492D44A719D1581A00E46213 /* snapshot.c in Sources */ = {isa = PBXBuildFile; fileRef = 492D44A519D1581A00E46213 /* snapshot.c */; };
+		492D44A819D1581A00E46213 /* snapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = 492D44A619D1581A00E46213 /* snapshot.h */; };
 		4949C33119AC6B4100113896 /* UITextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4949C32F19AC6B4100113896 /* UITextField.cpp */; };
 		4949C33219AC6B4100113896 /* UITextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 4949C33019AC6B4100113896 /* UITextField.h */; };
 		49BCF9F5197F4CE700F48FF6 /* cocos2dFilters.h in Headers */ = {isa = PBXBuildFile; fileRef = 49BCF995197F4CE700F48FF6 /* cocos2dFilters.h */; };
@@ -904,6 +906,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		492D44A519D1581A00E46213 /* snapshot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = snapshot.c; sourceTree = "<group>"; };
+		492D44A619D1581A00E46213 /* snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = snapshot.h; sourceTree = "<group>"; };
 		4949C32F19AC6B4100113896 /* UITextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UITextField.cpp; sourceTree = "<group>"; };
 		4949C33019AC6B4100113896 /* UITextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITextField.h; sourceTree = "<group>"; };
 		49BCF995197F4CE700F48FF6 /* cocos2dFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2dFilters.h; sourceTree = "<group>"; };
@@ -3760,6 +3764,8 @@
 		F4E0BF91196BA25D0053EFD7 /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				492D44A519D1581A00E46213 /* snapshot.c */,
+				492D44A619D1581A00E46213 /* snapshot.h */,
 				DA76D53819877854009EB3C1 /* lua_cocos2dx_coco_studio_manual.cpp */,
 				DA76D53919877854009EB3C1 /* lua_cocos2dx_coco_studio_manual.hpp */,
 				F4E0BF92196BA25D0053EFD7 /* CCLuaBridge.cpp */,
@@ -4216,6 +4222,7 @@
 				F4E0BB0C196BA00A0053EFD7 /* ftbdf.h in Headers */,
 				F4E0B548196B9C7D0053EFD7 /* CCEventKeyboard.h in Headers */,
 				49BCF9FF197F4CE700F48FF6 /* CCExposureFilter.h in Headers */,
+				492D44A819D1581A00E46213 /* snapshot.h in Headers */,
 				F4E0B591196B9C7D0053EFD7 /* CCAffineTransform.h in Headers */,
 				DAF28319196BDACB00959DA1 /* options.h in Headers */,
 				F4E0B320196B9C670053EFD7 /* CCAnimationCurve.h in Headers */,
@@ -4472,6 +4479,7 @@
 				F4E0BFC6196BA25D0053EFD7 /* lua_cocos2dx_extension_auto.cpp in Sources */,
 				F4E0B5BB196B9C7D0053EFD7 /* CCPhysicsShapeInfo_chipmunk.cpp in Sources */,
 				F48959D8199BA9F9000AA6A2 /* Runtime_ios-mac.mm in Sources */,
+				492D44A719D1581A00E46213 /* snapshot.c in Sources */,
 				F4E0BE62196BA0C10053EFD7 /* tinyxml2.cpp in Sources */,
 				F4E0B2B6196B9C660053EFD7 /* CCAnimation.cpp in Sources */,
 				F4E0B571196B9C7D0053EFD7 /* CCTouch.cpp in Sources */,

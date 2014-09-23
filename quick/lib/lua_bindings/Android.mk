@@ -17,6 +17,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/manual/CCLuaBridge.cpp \
           $(LOCAL_PATH)/manual/platform/android/CCLuaJavaBridge.cpp \
           $(LOCAL_PATH)/manual/platform/android/jni/Java_org_cocos2dx_lib_Cocos2dxLuaJavaBridge.cpp \
           $(LOCAL_PATH)/manual/tolua_fix.cpp \
+          $(LOCAL_PATH)/manual/snapshot.c \
           $(COCOS2DX_ROOT)/external/xxtea/xxtea.cpp
 
 ifeq ($(CC_USE_CCS_ARMATURE),1)
